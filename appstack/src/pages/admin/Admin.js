@@ -1,0 +1,403 @@
+import React from "react";
+import {
+	Card,CardBody,CardHeader,CardTitle,
+	Col, Row,
+	Container,
+	Button,
+	ModalHeader, ModalFooter, Modal,
+	CustomInput,
+	Table,
+} from "reactstrap";
+import { Trash2, Edit } from "react-feather";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import { Select } from 'react-dropdown-select';
+import ModalBody from "reactstrap/es/ModalBody";
+import Notification from "../../components/Notification";
+import { CustomImg, LoadingSprinner } from "../../components/CustomTag";
+import {FormGroup, Input, Label} from "reactstrap";
+import moment from 'moment';
+const api = require("./api/api");
+const ValidInput = require("../../utils/ValidInput");
+const utils = require("../../utils/utils");
+
+
+class RowMember extends React.Component{
+	constructor(props){
+		super(props);
+		this.state={
+			modalRemove: false,
+			modalEdit: false,
+			options: this.props.role,
+			options1: this.props.roleMember
+		}
+		this.toggleRemove = this.toggleRemove.bind(this);
+		this.toggleEdit = this.toggleEdit.bind(this);
+		this.handlerOK = this.handlerOK.bind(this);
+		
+	}
+	toggleRemove() {
+		this.setState(prevState => ({
+		  modalRemove: !prevState.modalRemove
+		}));
+	}
+	toggleEdit() {
+		this.setState(prevState => ({
+		  modalEdit: !prevState.modalEdit
+		}));
+	}
+	onChange(value){
+		console.log(value);
+		this.setState(({options1: value}))
+	}
+	handlerOK(){
+		this.props.handleEditRole(this.state.options1);
+	}
+	render(){
+		console.log(this.state.options1);
+		
+		return(
+			<React.Fragment>
+			<React.Fragment>
+				{/* Modal delete member*/}
+				<Modal isOpen={this.state.modalRemove}>
+				<ModalHeader>Delete Member</ModalHeader>
+				<ModalBody>
+					Are you sure to delete this member?
+				</ModalBody>
+				<ModalFooter>
+					<Button color="secondary"  onClick={this.toggleRemove}>
+					Cancel
+					</Button>
+					<Button color="success"  onClick={this.handleRemove}>
+					Sure
+					</Button>
+				</ModalFooter>
+				</Modal>
+				{/* End modal here */}
+			</React.Fragment>
+
+			<React.Fragment>
+				<Modal isOpen={this.state.modalEdit}>
+					<ModalHeader>Edit Role</ModalHeader>
+					<ModalBody>
+						<FormGroup id="form-create-member">
+						<Row>
+							<Col md="2" className="mr-0">
+							<Label className="align-middle">Email</Label>
+							</Col>
+							<Col md="10" className="ml-0">
+								{this.props.infoMember.email}
+							</Col>
+						</Row>
+						<Row className="mt-1">
+							<Col md="2" className="mr-0">
+							<Label className="align-middle">Role</Label>
+							</Col>
+							<Col md="10" className="ml-0">
+
+							<Select
+								multi
+								options={this.state.options}
+								valueField="substations"
+								labelField="substations"
+								values={this.state.options1}
+								onChange={this.onChange.bind(this)}
+								/>
+							</Col>
+						</Row>
+						<Row className="mt-3">
+	
+						</Row>
+						</FormGroup>
+					</ModalBody>
+					<ModalFooter>
+						<Button color="secondary" onClick={this.toggleEdit}>
+						Cancel
+						</Button>
+						<Button color="success" onClick={this.handlerOK}>
+						OK
+						</Button>
+					</ModalFooter>
+				</Modal>
+			</React.Fragment>
+			<React.Fragment>
+				<tr key={this.props.index}>
+				<td>
+					<CustomImg
+						src= {this.props.infoMember.photo}
+						width="32"
+						height="32"
+						className="rounded-circle my-n1"
+						alt="Avatar"
+					/>
+				</td>
+				<td>
+					<a href='#' style={{color: "#495057", textDecoration: "none"}}> {this.props.infoMember.full_name} </a>
+				</td>
+				<td>{this.props.infoMember.email}</td>
+				<td>
+					<CustomInput
+					type="switch"
+					id={this.props.infoMember._id}
+					name="customSwitch{id}"
+					checked= {this.props.infoMember.is_admin}
+					style={{cursor:'pointer'}}
+					onChange={this.props.handleSwitchIsAdminChange.bind(this,this.props.index)}
+					/>
+				</td>
+				<td className="width:100">
+					<Input id="roleMember" type="select" style={{cursor:'pointer'}} defaultValue={this.props.roleMember}>
+					{
+						this.props.roleMember.map((role,index) => {
+							
+						return(
+							<option key={utils.randomString()} value={role.id}>{role.substations}</option>
+						)
+						})
+					}
+					</Input>
+				</td>
+				<td>
+					<Edit
+					onClick={this.toggleEdit}
+					style={{cursor:'pointer', color:"blue"}}
+					className="mr-2"
+					/>
+					<Trash2
+					onClick={this.toggleRemove}
+					style={{cursor:'pointer', color:"red"}}
+					/>
+				</td>
+				<td className="text-primary">{moment(this.props.infoMember.last_login, "YYYYMMDD").fromNow()}</td>
+				</tr>
+			</React.Fragment>
+			</React.Fragment>
+		)
+	}
+};
+
+class Admin extends React.Component{
+	constructor(props) {
+		super(props);
+		this.state = {
+		showModal: {
+			add: false,
+			drop: false
+		},
+		isLoaded:{
+			getIdRole: false,
+			getListMemberships: false,
+			getMemberSuggestions: false
+		},
+		role: [],
+		roleMember: [],
+		listMemberships : [],
+		memberSuggestions:[],
+		find: {
+			search: [],
+			chars: null
+		}
+		};
+		this.eventSearchNewMember = this.eventSearchNewMember.bind(this);
+		this.handleSearchNewMember = this.handleSearchNewMember.bind(this);
+		this.eventSearch = this.eventSearch.bind(this);
+		this.handleSwitchIsAdminChange = this.handleSwitchIsAdminChange.bind(this);
+		this.handleDeleteMember = this.handleDeleteMember.bind(this);
+		this.handleEditRole = this.handleEditRole.bind(this);
+		this.eventClickAvatarSugges = this.eventClickAvatarSugges.bind(this);
+	}
+	eventSearchNewMember(event){
+		let keyWord = event.target.value;
+		this.setState({
+		[event.target.name]: event.target.value
+		})
+		if(event.key==="Enter" && !ValidInput.isEmpty(keyWord) ){
+		this.handleSearchNewMember(keyWord.toLowerCase());
+		}
+	}
+	handleSearchNewMember(informationSearch){
+		let state = Object.assign({}, this.state);
+		// xóa dl những người được hiển thị cũ đi để sau khi map push vào sẽ là dl mới không bị trùng với người cũ đã có
+		state.find.search = [];
+		state.memberSuggestions.map((memberSuggestion) => {
+		// so sánh username tất cả các thành viên trong project nếu có kí tự trùng thì thêm vào state
+		if( (memberSuggestion.full_name.toLowerCase()).indexOf(informationSearch) !== -1 || (memberSuggestion.username.toLowerCase()).indexOf(informationSearch) !== -1){
+			state.find.search.push(memberSuggestion);
+		}
+		})
+		this.setState(state);
+	}
+	eventSearch(event){
+		let tag = event.target.value;
+		let state = Object.assign({}, this.state);
+		state.find.chars = tag;
+		this.setState(state);
+	}
+
+	handleDeleteMember(index) {
+		let state = this.state;
+		// api.deleteMembership([],state.listMemberships[index].id,(err,result)=>  {
+		// if(err){
+		// 	Notification("error", "Error", err);
+		// } else {
+		// 	try {
+		// 	state.listMemberships.splice(index, 1);
+		// 	} catch (error) {
+		// 	Notification("warning", "Could not find the username to delete")
+		// 	}
+		// 	this.setState(state);
+		// 	Notification("success");
+		// }
+		// })
+		this.handleCloseModal('drop');
+	}
+
+	handleSwitchIsAdminChange (index){
+		let state = Object.assign({}, this.state);
+		let dataSent = {
+		"value": !state.listMemberships[index].is_admin,
+		"idMemberChange": state.listMemberships[index]._id
+		}
+
+		api.editIsAdmin(dataSent,(err, result)=>  {
+			if(err){
+				Notification("error", "Error", err.data === undefined?  err : err.status + " " + err.data._error_message);
+			} else {
+				state.listMemberships[index].is_admin = result;
+				this.setState(state);
+				Notification("success");
+			}
+		})
+		this.setState({
+			listMemberships: state.listMemberships
+		});
+	}
+	handleEditRole(value){
+		api.editIsAdmin(value,(err, result)=>  {
+			if(err){
+				Notification("error", "Error", err.data === undefined?  err : err.status + " " + err.data._error_message);
+			} else {
+				console.log(result);
+				
+			}
+		})
+		// this.setState({
+		// 	listMemberships: state.listMemberships
+		// });
+	}
+	eventClickAvatarSugges(username){
+		document.getElementById("inputSearchAllMember").value = username;
+		this.setState({inputSearchAllMember:username});
+	}
+
+	componentWillMount(){
+		let state = Object.assign({}, this.state);
+		api.getListMemberships((err, result)=>  {
+		if(err){
+			Notification("error", "Error", err.data === undefined?  err : err.status + " " + err.data._error_message);
+		} else {
+			let data = [];
+			result.map(({substations},index) => {
+				substations.map((station,index) => {
+					let element ={
+						substations: station,
+						id: index + 1
+					}
+					data.push(element);
+				});
+				state.roleMember[index] = data;				
+				state.listMemberships = result;
+				
+				data = [];
+			});
+			state.isLoaded.getListMemberships = true;
+			this.setState(state);
+
+		}
+		})
+		api.getIdRole((err, result)=>  {
+		if(err){
+			Notification("error", "Error", err.data === undefined?  err : err.status + " " + err.data._error_message);
+		} else {
+			let data1 = [];
+			result.map(({sub_id},index) => {
+				let element ={
+					substations: sub_id,
+					id: index + 1
+				}
+				data1.push(element);
+			});
+			state.role = data1;
+			state.isLoaded.getIdRole = true;
+			this.setState(state);
+		}
+		})
+		// api.getMemberSuggestions([],(err, result)=>  {
+		// if(err){
+		// 	Notification("error", "Error", err);
+		// } else {
+		// 	state.memberSuggestions = result;
+		// 	state.isLoaded.getMemberSuggestions = true;
+		// 	this.setState(state);
+		// }
+		// })
+	}
+	render() {		
+		console.log(this.state.roleMember);
+		
+		return(
+		!this.state.isLoaded.getListMemberships  ? <LoadingSprinner/>
+		:
+		<React.Fragment>
+
+                {/* End modal here */}
+				<Card>
+				<CardHeader>
+					<Col xs="3" className="float-left d-inline">
+						<Input type="search"  id="inputSearchMemberproject" placeholder="Search from member infomation" onKeyUp={(event)=>this.eventSearch(event)}/>
+					</Col>
+				</CardHeader>
+				<CardBody>
+					<Table className="mb-0">
+					<thead>
+					<tr>
+						<th>Avatar</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Is admin</th>
+						<th>Role</th>
+						<th>Action</th>
+						<th>Online</th>
+					</tr>
+					</thead>
+					<tbody>
+					{
+						this.state.listMemberships.map((infoMember,index) => {
+						let searchChars = this.state.find.chars;
+						if( ValidInput.isEmpty(searchChars) || ((infoMember.full_name.toLowerCase()).indexOf(searchChars.toLowerCase()) !== -1)){
+							return (
+							<RowMember
+								key = {utils.randomString()}
+								infoMember = {infoMember}
+								role = {this.state.role}
+								roleMember = {this.state.roleMember[index]}
+								index = {index}
+								handleDeleteMember = {this.handleDeleteMember}
+								handleSwitchIsAdminChange = {this.handleSwitchIsAdminChange}
+								handleEditRole = {this.handleEditRole}
+							/>
+							);
+						}
+						})
+					}
+					</tbody>
+					</Table>
+				</CardBody>
+				</Card>
+			</React.Fragment>
+		)
+	}
+}
+
+export default Admin;

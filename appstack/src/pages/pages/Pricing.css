@@ -1,0 +1,89 @@
+.pricing-table__tab-content__tab-pane__row__col-text{
+    font-size: 1.6rem;
+}
+.pricing-table__row__col-save{
+    background-color: #00dcb4;
+    border-radius: 1rem 1rem 0rem 0rem ;
+}
+.pricing-table__tab-content__tab-pane__col__card-background-color{
+    background-color: #e0f2f1 !important;
+}
+.pricing-table__tab-content__tab-pane__row__cad__car-body__li__span{
+    color: #25e8c8;
+    font-size: 1.5rem;
+}
+.pricing-table__table{
+    border-spacing: 0;
+    empty-cells: show;
+    font-size: 22px;
+    line-height: 3rem;
+    color: #222b37;
+}
+.pricing-table__thead__tr__td{
+    padding: 1.1rem 0;
+    border-top: 1px solid #e0e6e8;
+    line-height: 2;
+    color: #222b37;
+}
+.pricing-table__thead__tr__td__span-text{
+    width: 20%;
+    border-top: 1px solid #e0e6e8;
+    line-height: 2;
+    color: #222b37;
+    font-size: 1rem;
+}
+.pricing-table__table__tbody__td-span{
+    color: #25e8c8;
+}
+.pricing-table__table__thead{
+    border-bottom: 1px solid #e0e6e8;
+}
+.pricing-table__table__tbody__td-background-color{
+    background-color: #e0f2f1 !important;
+}
+.pricing-table__table__tbody__button-sign-up{
+    padding-left: 3.5rem;
+}
+.pricing-table__table__tbody__button-try{
+    padding-left: 2.3rem;
+}
+@media only screen and (min-device-width: 300px)
+and (max-device-width: 812px){
+    .pricing-table__tab-content__tab-pane__row__col__card__card-body-intro{
+
+    }
+    .pricing-table__tab-content__tab-pane__row__col__card__card-body{
+        padding-left: 0.1rem !important;
+        padding-right: 0.1rem !important;
+    }
+    .pricing-table__tab-content__tab-pane__row__col__card__car-body-cost{
+        padding-bottom: 0px;
+    }
+    .pricing-table__tab-content__tab-pane__row__cad__car-body__li__span{
+        padding-right: 0.4rem;
+        font-size: 1rem;
+    }
+    .pricing-table__tab-content__tab-pane__card__font-family{
+        font-size: 0.9rem;
+    }
+    .pricing-table__h1-text{
+        font-size: 1.3rem !important;
+    }
+    .pricing-table__thead__tr__td{
+        width: 30%;
+    }
+    .pricing-table__thead__tr__td__span-text{
+        width: 15%;
+    }
+    .pricing-table__table__tbody__td-text{
+        font-size: 0.9rem !important;
+    }
+    .pricing-table__tab-content__tab-pane__row__col-width{
+        width: 100% !important;
+    }
+    .pricing-table__tab-content__tab-pane__row__col-text{
+        margin-top: 0.3rem !important;
+        margin-bottom: 0.3rem !important;
+        font-size: 1.4rem !important;
+    }
+}
