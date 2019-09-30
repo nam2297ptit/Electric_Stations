@@ -72,7 +72,9 @@ class Sidebar extends React.Component {
     const project = JSON.parse(localStorage.getItem('project'));
     const name = userInfo.full_name;
     const avatar = userInfo.photo;
-    // const isAdmin = project.i_am_admin
+    const isAdmin = userInfo.is_admin
+    console.log(isAdmin);
+    
     if(name===undefined || avatar===undefined){
       return(
           <div> </div>
@@ -105,15 +107,15 @@ class Sidebar extends React.Component {
                       to="/profile"
                       icon={Users}
                     />
-                  {/* {isAdmin ?  */}
+                  {isAdmin ? 
                     <SidebarItem
                         name="Admin"
                         icon={Settings}
                         to="/stations/admin"
                     />
-                  //   : null
-                  // }
-                  // </React.Fragment>
+                   : null
+                   }
+                   </React.Fragment>
             </ul>
 
             {!layout.isBoxed && !sidebar.isSticky ? (

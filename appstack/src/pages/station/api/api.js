@@ -3,6 +3,8 @@ const utils = require("../../../utils/utils");
 const axios = require('axios');
 
 function createProject(data, callback) {
+    console.log(data);
+    
     axios({
         url: config_api.project,
         method: 'POST',
@@ -12,8 +14,12 @@ function createProject(data, callback) {
         },
         data: {
             name: data.name,
-            description: data.description,
-            is_private: data.is_private
+            manager: data.manager,
+            sub_id: data.sub_id,
+            location: {
+                longitude: data.location.longitude,
+                latitude: data.location.latitude
+            }
         }
     })
     .then(result => {

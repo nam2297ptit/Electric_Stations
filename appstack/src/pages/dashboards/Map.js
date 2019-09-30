@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, CardHeader, CardTitle } from "reactstrap";
+import { Card, CardBody } from "reactstrap";
 
 import GoogleMapReact from "google-map-react";
 

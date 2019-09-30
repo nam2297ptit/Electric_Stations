@@ -34,6 +34,7 @@ class RowMember extends React.Component{
 		this.toggleRemove = this.toggleRemove.bind(this);
 		this.toggleEdit = this.toggleEdit.bind(this);
 		this.handlerOK = this.handlerOK.bind(this);
+		this.handleRemove = this.handleRemove.bind(this);
 		
 	}
 	toggleRemove() {
@@ -47,15 +48,26 @@ class RowMember extends React.Component{
 		}));
 	}
 	onChange(value){
-		console.log(value);
 		this.setState(({options1: value}))
 	}
 	handlerOK(){
-		this.props.handleEditRole(this.state.options1);
+		let element = []
+		this.state.options1.map(({substations},index) => {
+			element.push(substations);
+		});
+		this.props.handleEditRole(element, this.props.infoMember._id);
+		
+		this.setState(prevState => ({
+			modalEdit: !prevState.modalEdit
+		}));
+	}
+	handleRemove(){		
+		this.props.handleDeleteMember(this.props.infoMember._id)
+		this.setState(prevState => ({
+			modalRemove: !prevState.modalRemove
+		}));
 	}
 	render(){
-		console.log(this.state.options1);
-		
 		return(
 			<React.Fragment>
 			<React.Fragment>
@@ -147,7 +159,7 @@ class RowMember extends React.Component{
 					/>
 				</td>
 				<td className="width:100">
-					<Input id="roleMember" type="select" style={{cursor:'pointer'}} defaultValue={this.props.roleMember}>
+					<Input id="roleMember" type="select" style={{cursor:'pointer'}} >
 					{
 						this.props.roleMember.map((role,index) => {
 							
@@ -197,7 +209,8 @@ class Admin extends React.Component{
 		find: {
 			search: [],
 			chars: null
-		}
+		},
+		editRole: true
 		};
 		this.eventSearchNewMember = this.eventSearchNewMember.bind(this);
 		this.handleSearchNewMember = this.handleSearchNewMember.bind(this);
@@ -236,21 +249,54 @@ class Admin extends React.Component{
 	}
 
 	handleDeleteMember(index) {
-		let state = this.state;
-		// api.deleteMembership([],state.listMemberships[index].id,(err,result)=>  {
-		// if(err){
-		// 	Notification("error", "Error", err);
-		// } else {
-		// 	try {
-		// 	state.listMemberships.splice(index, 1);
-		// 	} catch (error) {
-		// 	Notification("warning", "Could not find the username to delete")
-		// 	}
-		// 	this.setState(state);
-		// 	Notification("success");
-		// }
-		// })
-		this.handleCloseModal('drop');
+		api.deleteMembership(index,(err, result)=>  {
+			if(err){
+				Notification("error", "Error", err.data === undefined?  err : err.status + " " + err.data._error_message);
+			} else {
+				Notification("success");
+				let state = Object.assign({}, this.state);
+				api.getListMemberships((err, result)=>  {
+				if(err){
+					Notification("error", "Error", err.data === undefined?  err : err.status + " " + err.data._error_message);
+				} else {
+					let data = [];
+					result.map(({substations},index) => {
+						substations.map((station,index) => {
+							let element ={
+								substations: station,
+								id: index + 1
+							}
+							data.push(element);
+						});
+						state.roleMember[index] = data;				
+						state.listMemberships = result;
+						
+						data = [];
+					});
+					state.isLoaded.getListMemberships = true;
+					this.setState(state);
+		
+				}
+				})
+				api.getIdRole((err, result)=>  {
+				if(err){
+					Notification("error", "Error", err.data === undefined?  err : err.status + " " + err.data._error_message);
+				} else {
+					let data1 = [];
+					result.map(({sub_id},index) => {
+						let element ={
+							substations: sub_id,
+							id: index + 1
+						}
+						data1.push(element);
+					});
+					state.role = data1;
+					state.isLoaded.getIdRole = true;
+					this.setState(state);
+				}
+				})				
+			}
+		})
 	}
 
 	handleSwitchIsAdminChange (index){
@@ -273,25 +319,62 @@ class Admin extends React.Component{
 			listMemberships: state.listMemberships
 		});
 	}
-	handleEditRole(value){
-		api.editIsAdmin(value,(err, result)=>  {
+	handleEditRole(value,id){
+		api.editRole(value, id, (err, result)=>  {
 			if(err){
 				Notification("error", "Error", err.data === undefined?  err : err.status + " " + err.data._error_message);
 			} else {
-				console.log(result);
-				
-			}
+				Notification("success");
+				let state = Object.assign({}, this.state);
+				api.getListMemberships((err, result)=>  {
+				if(err){
+					Notification("error", "Error", err.data === undefined?  err : err.status + " " + err.data._error_message);
+				} else {
+					let data = [];
+					result.map(({substations},index) => {
+						substations.map((station,index) => {
+							let element ={
+								substations: station,
+								id: index + 1
+							}
+							data.push(element);
+						});
+						state.roleMember[index] = data;				
+						state.listMemberships = result;
+						
+						data = [];
+					});
+					state.isLoaded.getListMemberships = true;
+					this.setState(state);
+		
+				}
+				})
+				api.getIdRole((err, result)=>  {
+				if(err){
+					Notification("error", "Error", err.data === undefined?  err : err.status + " " + err.data._error_message);
+				} else {
+					let data1 = [];
+					result.map(({sub_id},index) => {
+						let element ={
+							substations: sub_id,
+							id: index + 1
+						}
+						data1.push(element);
+					});
+					state.role = data1;
+					state.isLoaded.getIdRole = true;
+					this.setState(state);
+				}
+				})
+				}
 		})
-		// this.setState({
-		// 	listMemberships: state.listMemberships
-		// });
 	}
 	eventClickAvatarSugges(username){
 		document.getElementById("inputSearchAllMember").value = username;
 		this.setState({inputSearchAllMember:username});
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		let state = Object.assign({}, this.state);
 		api.getListMemberships((err, result)=>  {
 		if(err){
@@ -333,19 +416,8 @@ class Admin extends React.Component{
 			this.setState(state);
 		}
 		})
-		// api.getMemberSuggestions([],(err, result)=>  {
-		// if(err){
-		// 	Notification("error", "Error", err);
-		// } else {
-		// 	state.memberSuggestions = result;
-		// 	state.isLoaded.getMemberSuggestions = true;
-		// 	this.setState(state);
-		// }
-		// })
 	}
-	render() {		
-		console.log(this.state.roleMember);
-		
+	render() {			
 		return(
 		!this.state.isLoaded.getListMemberships  ? <LoadingSprinner/>
 		:

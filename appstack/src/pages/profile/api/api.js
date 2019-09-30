@@ -6,8 +6,6 @@ const newapi = 'http://uy-private-server.tinasoft.com.vn:8001/api/v1/'
 const axios = require('axios');
 
 function ModalAPI_(url,method,contentType,data,callback){
-    console.log('checkMyModalAPI')
-    console.log(data)
     axios({
         url: url,
         method: method,
@@ -60,21 +58,11 @@ function getStats(id, callback) {
         });
 }
 function getContacts(id, callback) {
-    ModalAPI({
-        url: config_api.user + `/${id}/contacts`,
-        method: 'GET',
-        headers: {
-            'content-type': 'application/json',
-            'authorization': 'Bearer ' + getAuthToken()
-        },
-        body: null
-    }, [getObjectValueSameKey(['id', 'username', 'photo', 'full_name', 'bio', 'roles'])], (err, result) => {
-        if (err) {
-            return callback(err);
-        } else {
-            return callback(null, result);
-        }
-    })
+    ModalAPI_(config_api.path+'users', 'GET', 'application/json', null, (err, result) => {
+        if (err) {return callback(err)}
+        else {return callback(null, result)}
+    }
+)
 }
 function getWatched(id, page, callback) {
     ModalAPI({
@@ -129,44 +117,11 @@ function updateUserInfo(data, callback) {
 }
 
 function updateAvatar(photo, callback) {
-    console.log(photo)
-    // ModalAPI_(config_api.path+'users/change_avatar', 'POST', 'multipart/form-data', {'avatar':photo}, (err, result) => {
-    //         if (err) {return callback(err)}
-    //         else {return callback(null, result)}
-    //     }
-    // )
-        fetch(newapi + 'users/change_avatar',{
-            // url: newapi + 'users/change_avatar',
-            method: 'POST',
-            headers: {
-                // 'Content-Type': 'multipart/form-data',
-                "Authorization": 'Bearer ' + getAuthToken()
-            },
-            body: photo,
-            // transformRequest: [function(data, headers) {
-            //     delete headers.common['Content-Type'];
-            //     return data
-            // }]
-        })
-        .then(result => {
-            console.log('success')
-            // return callback(false, result.data)
-            return callback(false, result)
-        })
-        .catch(error => {
-            console.log('error')
-            if (error.response) {
-                // Lỗi khi server nhận được request và không xử lý được, các lỗi này có mã lỗi ngoài dải 2xx
-                return callback(error.response)
-            } else if (error.request) {
-                // Lỗi khi request được tạo ra nhưng server không hồi đáp, vd : net::ERR_CONNECTION_TIMED_OUT
-                return callback("Please check your internet connection to server");
-            } else {
-                console.log(error.message);
-                // Lỗi khi thiết lập request status
-                return callback(error.message) 
-            }
-        });
+    ModalAPI_(config_api.path+'users/change_avatar', 'POST', 'multipart/form-data', {'avatar':photo}, (err, result) => {
+            if (err) {return callback(err)}
+            else {return callback(null, result)}
+        }
+    )
 }
 
 function getTimeline(id, page, callback) {

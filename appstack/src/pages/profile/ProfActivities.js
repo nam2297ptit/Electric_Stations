@@ -7,9 +7,8 @@ import classnames from 'classnames';
 import "./Profile.css"
 import LoadingSprinner from "../../components/LoadingSprinner"
 import {CustomImg} from "../../components/CustomTag"
-import { Link, Eye, Key } from "react-feather"
+import { Link } from "react-feather"
 import moment from 'moment'
-import empty_avatar from "../../assets/img/avatars/empty_avatar.png"
 import {getUserId} from "../../utils/utils"
 import {isEmpty} from "../../utils/ValidInput"
 const api = require('./api/api')
@@ -91,22 +90,6 @@ class ProfActivities extends Component {
           </NavItem>
           <NavItem>
             <NavLink
-              className={classnames({ active: this.state.activeTab === 'project' })}
-              onClick={this.toggle.bind(this,'project')}
-            >
-              Project
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === 'watched' })}
-              onClick={this.toggle.bind(this,'watched')}
-            >
-              Watched
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
               className={classnames({ active: this.state.activeTab === 'contact' })}
               onClick={this.toggle.bind(this,'contact')}
             >
@@ -119,18 +102,10 @@ class ProfActivities extends Component {
           <TabPane tabId="timeline">
             {this.state.receiveTimeline && <ActTimeline id={this.props.id}/>}
           </TabPane>
-          <TabPane tabId="project">
-            {this.state.receiveProject && <ActProject id={this.props.id}/>}
-          </TabPane>
-          <TabPane tabId="watched">
-            
-            {this.state.receiveWatched && <ActWatched id={this.props.id}/>}
-          </TabPane>
           <TabPane tabId="contact">
             
             {this.state.receiveContact && <ActContact id={this.props.id}/>}
           </TabPane>
-         
         </TabContent>
       </div>
     )
@@ -151,14 +126,14 @@ class ActTimeline extends Component {
     }
     componentDidMount() {
         this.setState({loadApiGetTimeline: false});
-        api.getTimeline(this.props.id, 1, (err, result) => {
-            if (err) {
-              Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-            }
-            else {
-              this.setState({ data: result, loadApiGetTimeline: true, newPageLength: result.length })
-            }
-        })
+        // api.getTimeline(this.props.id, 1, (err, result) => {
+        //     if (err) {
+        //       Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
+        //     }
+        //     else {
+        //       this.setState({ data: result, loadApiGetTimeline: true, newPageLength: result.length })
+        //     }
+        // })
     }
     wikiChangeMore(id) {
         this.setState({
@@ -172,23 +147,23 @@ class ActTimeline extends Component {
     }
     updateTimeLine() {
         this.setState({ page: this.state.page + 1 });
-        api.getTimeline(this.props.id, this.state.page, (err, result) => {
-          if (err) {
-            Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-          } else {
-            this.setState({
-              maxLoad: this.state.maxLoad + 10
-            })
-            let tempdata = this.state.data
-            for (let i = 0; i < result.length; i++) {
-              tempdata.push(result[i]);
-            }
-            this.setState({
-              data:tempdata,
-              newPageLength: result.length
-            });
-          }
-        })
+        // api.getTimeline(this.props.id, this.state.page, (err, result) => {
+        //   if (err) {
+        //     Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
+        //   } else {
+        //     this.setState({
+        //       maxLoad: this.state.maxLoad + 10
+        //     })
+        //     let tempdata = this.state.data
+        //     for (let i = 0; i < result.length; i++) {
+        //       tempdata.push(result[i]);
+        //     }
+        //     this.setState({
+        //       data:tempdata,
+        //       newPageLength: result.length
+        //     });
+        //   }
+        // })
       }
     
     render() {
@@ -385,203 +360,6 @@ class ActTimeline extends Component {
     }
 }
 
-class ActProject extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            maxLoad: 10,
-            listProject: [],
-            listContact: []
-        }
-    }
-    loadMore(){
-        this.setState({ maxLoad: this.state.maxLoad + 10 })
-    }
-    componentDidMount() {
-        this.setState({loadApiGetProject: false, loadApiGetContact: false });
-        api.getProject((err,result) => {
-            if (err) {
-              Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-            }
-            else {
-              this.setState({listProject:result, loadApiGetProject: true});
-            }
-        })
-        api.getContacts(this.props.id,(err,result) => {
-            if (err) {
-              Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-            }
-            else {
-              this.setState({listContact:result, loadApiGetContact: true});
-            }
-        })
-    }
-    render() {
-        return (
-            <div>
-                {(!this.state.loadApiGetProject || !this.state.loadApiGetContact) ? <LoadingSprinner /> :
-                    <Card>
-                        <CardBody className="tiles mb-4" aria-live="polite">
-                            {this.state.listProject.slice(0, this.state.maxLoad).map((data, index) => (
-                                <div key={index}>
-                                    <Media>
-                                        <div className="w-100">
-                                            <div className="float-left">
-                                                <Media left href={`${window.location.origin}/project/${data.slug}/timeline`}>
-                                                    <CustomImg
-                                                        src={data.logo_small_url}
-                                                        className="rounded-circle mr-2 img--user--square-3x"
-                                                        title={`${data.name}`}
-                                                        alt="Avatar"
-                                                    />
-                                                </Media>
-                                                <Media body className="float-right">
-                                                    <Media heading>
-                                                        <a title={data.name} href={`${window.location.origin}/project/${data.slug}/timeline`}>
-                                                            {data.name}
-                                                        </a>
-                                                    </Media>
-                                                    {data.description}
-                                                </Media>
-                                            </div>
-                                            <div className="float-right w-25">
-                                                {this.state.listContact.map((user, index) => (
-                                                    data.members.indexOf(user.id) === -1 ? null :
-                                                        <div key={index} className="float-right">
-                                                            <a href={user.id !== getUserId() ? `?username=${user.username}` : window.location.pathname}>
-                                                                <CustomImg
-                                                                    src={user.photo}
-                                                                    className="mr-1 mt-1 img--user--square-2x"
-                                                                    title={`@${user.username}`}
-                                                                    alt="Avatar"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </Media>
-                                    <hr />
-                                </div>
-                            ))}
-                            {this.state.maxLoad < this.state.listProject.length && <Button block color="primary" className="load-more" onClick={this.loadMore.bind(this)}>Load More</Button>}
-                        </CardBody>
-                    </Card>
-                }
-            </div>
-        );
-    }
-}
-
-class ActWatched extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            maxLoad: 10,
-            listWatched: [],
-            page: 2,
-        }
-    }
-    loadMore(){
-        this.setState({ maxLoad: this.state.maxLoad + 10 })
-    }
-    componentDidMount() {
-        this.setState({loadApiGetWatched: false});
-        api.getWatched(this.props.id, 1, (err, result) => {
-            if (err) {
-              Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-            }
-            else {
-                this.setState({ listWatched: result, loadApiGetWatched: true,  newPageLength: result.length });
-            }
-        })
-    }
-    updateWatched() {
-        this.setState({ page: this.state.page + 1 });
-        api.getWatched(this.props.id, this.state.page, (err, result) => {
-          if (err) {
-            Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-          } else {
-            this.setState({
-                maxLoad: this.state.maxLoad + 10
-            })
-            let tempdata = this.state.listWatched
-            for (let i = 0; i < result.length; i++) {
-              tempdata.push(result[i]);
-            }
-            this.setState({
-              listWatched: tempdata,
-              newPageLength: result.length
-            });
-          }
-        })
-      }
-    render() {
-        return (
-            <div>
-                {!this.state.loadApiGetWatched ? <LoadingSprinner /> :
-                    <Card>
-                        <CardBody className="tiles mb-4" aria-live="polite">
-                            {this.state.listWatched.slice(0, this.state.maxLoad).map((data, index) => (
-                                <div key={index}>
-                                    <Media>
-                                        <Media left href={data.type === "userstory" && !isEmpty(data.assigned_to_extra_info) ? (data.assigned_to_extra_info.id !== getUserId() ? `?username=${data.assigned_to_extra_info.username}` : window.location.pathname)
-                                                        : data.type === "project" ? "#"
-                                                        : data.type === "task" && !isEmpty(data.assigned_to_extra_info) ? (data.assigned_to_extra_info.id !== getUserId() ? `?username=${data.assigned_to_extra_info.username}` : window.location.pathname)
-                                                        : "#"
-                                        }>
-                                            <CustomImg
-                                                src={data.type === "userstory" && data.assigned_to_extra_info !== null ? data.assigned_to_extra_info.photo
-                                                    : data.type === "project" ? data.logo_small_url
-                                                    : data.type === "task" && data.assigned_to_extra_info !== null ? data.assigned_to_extra_info.photo
-                                                    : empty_avatar}
-                                                className="rounded-circle mr-2 img--user--square-3x"
-                                                title={(data.type === "userstory"  || data.type === "task") && data.assigned_to_extra_info !== null ? `@${data.assigned_to_extra_info.username}`
-                                                    : data.type === "project" ? data.name
-                                                    : null}
-                                                alt="Avatar"
-                                            />
-                                        </Media>
-                                        <Media body>
-                                            <div className="float-left">
-                                                <Media heading>
-                                                    {data.type === "userstory" ? <div><span>{data.project_name}</span><span> USER STORY </span> <span style={{ color: data.status_color }}>{data.status}</span></div>
-                                                    : data.type === "project" ? (data.is_private ? <div><span><a title={data.name} href={`${window.location.origin}/project/${data.slug}/timeline`}>{data.name}</a></span><span className="mx-3"><Key size="20px" /></span></div> : <a href="#">{data.name}</a>)
-                                                    : data.type === "task" ? <div><span>{data.project_name}</span><span> TASK </span> <span style={{ color: data.status_color }}>{data.status}</span></div>
-                                                    : null
-                                                    }
-                                                </Media>
-                                                    {data.type === "userstory" ? <strong>#{data.ref + ' '}<a href={`${window.location.origin}/project/${data.project_slug}/us/${data.ref}`} title={`#${data.ref} ${data.subject}`}>{data.subject}</a></strong>
-                                                    : data.type === "project" ? data.description
-                                                    : data.type === "task" ? <strong>#{data.ref + ' '}<a href={`${window.location.origin}/project/${data.project_slug}/task/${data.ref}`} title={`#${data.ref} ${data.subject}`}>{data.subject}</a></strong>
-                                                    : "null"
-                                                }
-                                            </div>
-                                            <div className="float-right">
-                                                <span title={data.total_watchers < 2 ? `${data.total_watchers} watcher` : `${data.total_watchers} watchers`}>
-                                                    <div className="float-right">{data.total_watchers}</div>
-                                                    <Eye size="6%" className="float-right mx-1" />
-                                                </span>
-                                            </div>
-                                        </Media>
-                                    </Media>
-                                    <hr />
-                                </div>
-                            ))}
-                            {this.state.maxLoad < this.state.listWatched.length ? <Button block color="primary" className="load-more" onClick={this.loadMore.bind(this)}>Load More</Button>
-                            : this.state.newPageLength === 30 ?
-                                <Button block color="primary" className="load-more" onClick={this.updateWatched.bind(this)}>Load More</Button>
-                            :
-                            null
-                            }
-                        </CardBody>
-                    </Card>
-                }
-            </div>
-        );
-    }
-}
-
 class ActContact extends Component {
     constructor(props) {
         super(props);
@@ -600,37 +378,56 @@ class ActContact extends Component {
               Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
             }
             else {
+              console.log(result);
+              
               this.setState({listContact: result, loadApiGetContact: true});
             }
         })
     }
     
     render() {
+      console.log(this.state.listContact);
+      
         return (
             <div>
             {!this.state.loadApiGetContact ? <LoadingSprinner/> :
             <Card>
                 <CardBody className="tiles mb-4" aria-live="polite">
-                {this.state.listContact.slice(0,this.state.maxLoad).map((data,index)=>(
+                {this.state.listContact.map((data,index)=>(
                     <div key={index}>
                         <Media>
                             <Media left href={data.id !== getUserId() ? `?username=${data.username}` : window.location.pathname}>
                                 <CustomImg
                                     src={data.photo}
-                                    className="rounded-circle mr-2 img--user--square-3x"
+                                    className="img--user rounded-circle  mr-3"
                                     title={`@${data.username}`}
                                     alt="Avatar"
                                 />
                             </Media>
                             <Media body>
                                 <Media>
-                                    <strong><a title={data.full_name} href={data.id !== getUserId() ? `?username=${data.username}` : window.location.pathname}>
+                                    <strong>Full Name: <a title={data.full_name} href={data.id !== getUserId() ? `?username=${data.username}` : window.location.pathname}>
                                         {data.full_name}
                                     </a></strong>
                                 </Media>
-                                {data.roles.join(', ')}
-                                <br/>
-                                {data.bio}
+                                <Media>
+                                    <strong>Full Name: {data.email}</strong>
+                                </Media>
+                                <Media>
+                                    <strong>Gender: {data.gender}</strong>
+                                </Media>
+                                <Media>
+                                    <strong>Date joined: {moment(data.date_joined).format('DD/MM/YYYY h:mm:ss a')}</strong>
+                                </Media>
+                                <Media>
+                                    <strong>Stations: {                                
+                                    data.substations.map((substations,index) => {
+                                        return (
+                                          <p className="d-inline">{substations}, </p>
+                                        )
+                                    })
+                                    }</strong>
+                                </Media>
                             </Media>
                         </Media>
                         <hr/>

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { CustomImg } from "../../components/CustomTag"
 import "./Profile.css"
-
+import moment from 'moment';
 const api = require('./api/api');
 class ProfDetails extends Component {
     constructor(props) {
@@ -24,13 +24,13 @@ class ProfDetails extends Component {
             gender: this.props.gender,
             phone_number: this.props.phone_number,
             address: this.props.address,
-            bio: this.props.bio,
+            date_joined: this.props.date_joined,
+            substations: this.props.substations,
 
             changeFullname: this.props.fullname,
             changeGender: this.props.gender,
             changePhone_number: this.props.phone_number,
             changeAddress: this.props.address,
-            changeBio: this.props.bio,
 
             modal: false,
         }
@@ -76,13 +76,10 @@ class ProfDetails extends Component {
             this.setState({isLoadedImg: false});
             api.updateAvatar(formPhoto, (err, result) => {
                 if (err) {
-                    console.log('uploadimg1')
-                    console.log(err)
                     this.setState({isLoadedImg: true});
                     Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
                 }
                 else{
-                    console.log('uploadimg2')
                     this.setState({isLoadedImg: true, avatar: result.photo});
                     var local = JSON.parse(localStorage.getItem('userInfo'))
                     localStorage.setItem('userInfo', JSON.stringify({
@@ -121,7 +118,7 @@ class ProfDetails extends Component {
             changeGender: this.state.gender,
             changePhone_number: this.state.phone_number,
             changeAddress: this.state.address,
-            changeBio: this.state.bio,
+            changeDateCreated: this.state.date_joined,
             modal: !prevState.modal,
             tempAvt: null,
             fileUpdateAvt: null
@@ -134,7 +131,7 @@ class ProfDetails extends Component {
                 <CardHeader>
                     <CardTitle tag="h5" className="mb-0 ">
                         Profile Details
-                        {this.state.checkMainAcc == '' && <FontAwesomeIcon icon={faEdit} className="float-right Profile__pointer" onClick={this.toggle} />}
+                        {this.state.checkMainAcc === '' && <FontAwesomeIcon icon={faEdit} className="float-right Profile__pointer" onClick={this.toggle} />}
                     </CardTitle>
                 </CardHeader>
 
@@ -183,11 +180,6 @@ class ProfDetails extends Component {
                         <FormGroup>
                             <Label for="address"><h5><dt>Address</dt></h5></Label>
                             <Input type="text" id="address" name="changeAddress" defaultValue={this.state.address}  onChange={this.isChangeValueUpdate} />
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Label for="bio"><h5><dt>Bio</dt></h5></Label>
-                            <Input type="text" id="bio" name="changeBio" defaultValue={this.state.bio}  onChange={this.isChangeValueUpdate} />
                         </FormGroup>
                     </ModalBody>
                     <ModalFooter>
@@ -239,11 +231,17 @@ class ProfDetails extends Component {
                         </div>
 
                         <li className="mb-1">
-                            <FileText width={14} height={14} className="mr-1" /> Projects: {" "} {this.props.countProject}
+                            <FileText width={14} height={14} className="mr-1" /> Substations: {" "} {
+                                this.props.substations.map((substations,index) => {
+                                    return (
+                                        <p className="d-inline">{substations}, </p>
+                                    )
+                                })
+                                }
                         </li>
 
                         <li className="mb-1">
-                            <Users width={14} height={14} className="mr-1" /> Colleagues: {" "} {this.props.countContact}
+                            <Users width={14} height={14} className="mr-1" /> Date Joined: {" "} {moment(this.props.date_joined).format('DD/MM/YYYY h:mm:ss a')}
                         </li>
 
                     </ul>

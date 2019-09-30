@@ -1,6 +1,9 @@
 const config_network = {
-    "host": "http://uy-private-server.tinasoft.com.vn",
+    "host": "http://192.168.1.179",
     "port": "8001"
+};
+const config_socket = {
+    "ip": "http://192.168.1.179:8001",
 };
 
 const api_path = config_network.host + ':' + config_network.port + "/api/v1/";
@@ -12,17 +15,14 @@ const config_api = {
     "register": api_path + "auth/register",
     // project
     "project": api_path + "information",
-    // Work
-    "work": api_path + "works",
+    // Getdata
+    "data": api_path + "data",
     //Task
     "task": api_path + "tasks",
     "task_status": api_path + "task-statuses",
     "task_attachments": api_path + "tasks/attachments",
-    // Timeline
-    "timeline": api_path + "timeline/project/",
-    "timeline_profile" : api_path + "timeline/profile/",
-    "timeline_user" : api_path + "timeline/user",
-    "activities": api_path + "history/userstory/",
+    // Admin
+    "admin": api_path + "users",
     // Notification
     "notification": api_path + "web-notifications",
     // member
@@ -32,5 +32,6 @@ const config_api = {
 
 module.exports = {
     config_network: config_network,
-    config_api: config_api
+    config_api: config_api,
+    config_socket: config_socket
 };

@@ -6,6 +6,8 @@ import Tables from "./Tables";
 import Statistics from "./Statistics";
 import StationInformation from "./StationInformation";
 import moment from 'moment'
+import Notification from "../../components/Notification";
+const config_socket =  require("../../config/config").config_socket;
 const utils = require("../../utils/utils");
 const api = require("./api/api");
 class Crypto extends React.Component {
@@ -20,7 +22,7 @@ class Crypto extends React.Component {
         isLoaderAPI_EvaluationList: false,
         type: null,
         response: false,
-        endpoint: "http://uy-private-server.tinasoft.com.vn:8001"  
+        endpoint: config_socket.ip
     };
     this.handleChangeType = this.handleChangeType.bind(this);
   }
@@ -28,14 +30,19 @@ class Crypto extends React.Component {
     this.setState({type: type});
   }
   componentWillMount(){
-    const that = this;
-    api.getData((err, result)=>{       
-    if(err){
-        Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-    } else {
-        that.setState({data_tables: result ,isLoaderAPI: true});
-        }
-    })
+    // const that = this;
+    // api.getData((err, result)=>{       
+    // if(err){
+    //     Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
+    // } else {
+    //     let element = [];
+    //     let data = [...result];
+    //     data.map((value,index) => {
+    //       element.push(value);
+    //     });
+    //     that.setState({data_tables: element ,data: result[0],data_charts: result, isLoaderAPI: true});
+    //     }
+    // })
 }
 
   componentDidMount() {
@@ -66,7 +73,6 @@ class Crypto extends React.Component {
         }
       });
       socket.on('error', function(err) {
-          console.log(err);
       });
       this.setState({info: utils.getStationInfo(), isLoaded: true});
   }

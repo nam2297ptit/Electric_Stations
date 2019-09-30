@@ -225,7 +225,7 @@ class Statistics extends React.Component {
                 <ShoppingBag className="feather-lg text-danger" />
               </div>
               <Media body>
-                <h3 className="mb-2">{data.oil} Hz</h3>
+                <h3 className="mb-2">{data.oil} °C</h3>
                 <div className="mb-0">Oil</div>
               </Media>
             </Media>

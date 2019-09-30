@@ -53,7 +53,8 @@ class SignIn extends React.Component {
                             id: result._id,
                             token: result.auth_token,
                             full_name: result.full_name,
-                            photo: result.photo
+                            photo: result.photo,
+                            is_admin: result.is_admin
                         }))
                     }
                     window.location.replace("/stations");

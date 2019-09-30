@@ -37,9 +37,6 @@ class TableProject extends React.Component {
     }   
     
     render() {
-        const data = this.state.data;
-        console.log(data);
-        
         return (
             <Container fluid className="table-project mt-4">
                 <Card id={"table-project-" + this.state.data._id} className="table-project__card border-bottom-0" >
@@ -49,20 +46,13 @@ class TableProject extends React.Component {
                             <div>
                                 <div className="d-inline-block" id={"tooltip-project-" + this.state.data.id}>{this.state.data.sub_id}</div>
                                 
-                                <div className="d-inline-block ml-1 pt-1 font-size-1x">
-                                    <Badge
-                                        color={this.state.data.is_private ? "info" : "primary"}
-                                        className="badge-pill px-1 mr-1 mb-1"
-                                    >
-                                        {this.state.data.is_private ? "Private" : "Public"}
-                                    </Badge>
-                                </div>
+ 
                                 <div className="d-inline-block ml-1 pt-1 font-size-1x">
                                     <Badge
                                         color={(this.state.data.i_am_owner) ? "info" : "primary"}
                                         className="badge-pill px-1 mr-1 mb-1"
                                     >
-                                        {this.state.data.i_am_owner ? "Owner" : "Member"}
+                                        {this.state.data.is_admin ? "Admin" : null}
                                     </Badge>
                                 </div>
                                 <h6 className="text-muted table-project__h6 mt-1">Manager: {this.state.data.manager}</h6>

@@ -4,7 +4,7 @@ const axios = require('axios');
 
 function getData(callback) {
     axios({
-        url: "http://uy-private-server.tinasoft.com.vn:8001/api/v1/data" +  "/" + utils.getStationInfo().sub_id,
+        url: config_api.data +  "/" + utils.getStationInfo().sub_id,
         method: 'GET',
         headers: {
             "Content-type": "application/json",

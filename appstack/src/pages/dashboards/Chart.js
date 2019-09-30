@@ -42,12 +42,16 @@ class Chart extends React.Component {
 
   render() {
     const data = this.props.data;
+    console.log(data);
+    
     const type = this.props.type;
     const UA = data.map(({time, UA },key)=>{
       let x = time;
       let y = UA;
       return {x,y} 
     })
+    console.log(UA);
+    
     const UB = data.map(({time, UB },key)=>{
       let x = time;
       let y = UB;

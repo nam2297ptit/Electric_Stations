@@ -12,13 +12,7 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: null,
-      avatar: null,
-      fullname: null,
-      phone_number: null,
-      address: null,
-      gender: null,
-      bio: null,
+      data : [],
       countProject: 0,
       countContact: 0,
       id: "",
@@ -28,7 +22,6 @@ class Profile extends React.Component {
       loadApigetStats: false,
       notFound : false,
     }
-
   }
 
   componentWillMount() {
@@ -38,8 +31,8 @@ class Profile extends React.Component {
         this.setState({notFound : true, isLoaded : true})
       }
       else {
-        console.log('mainpage')
-        console.log(result)
+        console.log(result);
+        
         this.setState(
           {
             email: result.email,
@@ -48,8 +41,9 @@ class Profile extends React.Component {
             phone_number: result.phone_number,
             address: result.address,
             gender: result.gender,
-            bio: result.bio,
-            id: result.id,
+            date_joined: result.date_joined,
+            id: result._id,
+            substations: result.substations,
             loadApiGetUser: true,
           });
       }
@@ -68,7 +62,7 @@ class Profile extends React.Component {
                 <h1 className="h3 mb-3">Profile</h1>
                 <Row>
                   <Col md="4" xl="3">
-                    <ProfDetails countProject={this.state.countProject} countContact={this.state.countContact} avatar={this.state.avatar} fullname={this.state.fullname} email={this.state.email} phone_number={this.state.phone_number} address={this.state.address} gender={this.state.gender} bio={this.state.bio} />
+                    <ProfDetails countProject={this.state.countProject} countContact={this.state.countContact} avatar={this.state.avatar} fullname={this.state.fullname} email={this.state.email} phone_number={this.state.phone_number} address={this.state.address} gender={this.state.gender} date_joined={this.state.date_joined} substations={this.state.substations}  />
                   </Col>
                   <Col md="8" xl="9">
                     <ProfActivities id={this.state.id} />
