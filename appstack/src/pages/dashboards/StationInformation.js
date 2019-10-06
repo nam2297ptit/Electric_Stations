@@ -1,14 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import classnames from 'classnames';
 import {
   Card,
-  CardBody,
-  CardHeader,
-  CardTitle, CardText, Button,
-  Row, Col, 
-  Nav, NavItem, NavLink,
-  TabContent, TabPane,
+  CardBody
 } from "reactstrap";
 import {
   Tabs, Tab
@@ -20,16 +14,16 @@ import {
 } from "react-feather";
 import Map from "./Map";
 class StationInformation extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    const {data} = this.props;
+    const { data } = this.props;
     this.state = {
-        data: data,
-        activeTab: '1'
+      data: data,
+      activeTab: '1'
     };
     this.toggle = this.toggle.bind(this);
   }
-  
+
   toggle(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
@@ -42,8 +36,8 @@ class StationInformation extends React.Component {
     return (
       <React.Fragment>
         <Tabs defaultActiveKey="info"  >
-          <Tab eventKey="info" title="Station information"> 
-            <Card className="flex-fill w-100"  style={{ height: 280, width: "100%" }}>
+          <Tab eventKey="info" title="Station information">
+            <Card className="flex-fill w-100" style={{ height: 280, width: "100%" }}>
               <CardBody className="my-0">
                 <h3 className="text-center">{data.sub_id}</h3>
                 <ul className="list-unstyled mb-0">
@@ -62,16 +56,16 @@ class StationInformation extends React.Component {
                   <li className="mb-2">
                     <MapPin width={20} height={20} className="mr-1" />Người quản lí{" "}
                     <Link to="#">{data.manager}</Link>
-                  </li>               
+                  </li>
                 </ul>
               </CardBody>
-            </Card>  
+            </Card>
           </Tab>
           <Tab eventKey="map" title="Map">
-              <Map data={data}/>
+            <Map data={data} />
           </Tab>
         </Tabs>
-       
+
       </React.Fragment>
 
     );

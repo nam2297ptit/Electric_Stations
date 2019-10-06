@@ -4,12 +4,12 @@ import { Card, CardBody } from "reactstrap";
 import GoogleMapReact from "google-map-react";
 
 class Map extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    const {data} = this.props;
+    const { data } = this.props;
     this.state = {
-        data: data,
-        activeTab: '1'
+      data: data,
+      activeTab: '1'
     };
   }
   getMapOptions = maps => {
@@ -20,7 +20,7 @@ class Map extends React.Component {
       scaleControl: true,
       scrollwheel: false,
       streetViewControl: true
-    };    
+    };
   };
 
   renderMarkers(sub_id, lat, lng, map, maps) {
@@ -40,23 +40,23 @@ class Map extends React.Component {
     let lng = parseInt(location.longitude)
     return (
       <Card>
-      <CardBody>
-        <div style={{ height: 240, width: "100%" }}>
-          <GoogleMapReact
-            options={this.getMapOptions}
-            bootstrapURLKeys={{
-              key: "AIzaSyA-aWrwgr64q4b3TEZwQ0lkHI4lZK-moM4"
-            }}
-            defaultCenter={{
-                    lat: lat,
-                    lng: lng
-                  }}
-            defaultZoom={9}
-            onGoogleApiLoaded={({ map, maps }) => this.renderMarkers(sub_id, lat, lng, map, maps)}
-          />
-        </div>
-      </CardBody>
-    </Card>
+        <CardBody>
+          <div style={{ height: 240, width: "100%" }}>
+            <GoogleMapReact
+              options={this.getMapOptions}
+              bootstrapURLKeys={{
+                key: "AIzaSyA-aWrwgr64q4b3TEZwQ0lkHI4lZK-moM4"
+              }}
+              defaultCenter={{
+                lat: lat,
+                lng: lng
+              }}
+              defaultZoom={9}
+              onGoogleApiLoaded={({ map, maps }) => this.renderMarkers(sub_id, lat, lng, map, maps)}
+            />
+          </div>
+        </CardBody>
+      </Card>
     );
   }
 }

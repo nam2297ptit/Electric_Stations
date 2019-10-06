@@ -1,10 +1,10 @@
-const config_api =  require("../../../config/config").config_api;
+const config_api = require("../../../config/config").config_api;
 const utils = require("../../../utils/utils");
 const axios = require('axios');
 
 function createProject(data, callback) {
     console.log(data);
-    
+
     axios({
         url: config_api.project,
         method: 'POST',
@@ -22,21 +22,21 @@ function createProject(data, callback) {
             }
         }
     })
-    .then(result => {
-        return callback(false, result.data)
-    })
-    .catch(error => {
-        if (error.response) {
-            return callback(error.response)
-        } else if (error.request) {
-            return callback("Please check your internet connection to server");
-        } else {
-            return callback(error.message) 
-        }
-    });
+        .then(result => {
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
 }
 
-function getInfoProjectAll(callback) {        
+function getInfoProjectAll(callback) {
     axios({
         url: config_api.project,
         method: 'GET',
@@ -46,31 +46,31 @@ function getInfoProjectAll(callback) {
         },
         data: {}
     })
-    .then(result => {
-        console.log(result);
-        
-        return callback(false, result.data)
-    })
-    .catch(error => {
-        if (error.response) {
-            return callback(error.response)
-        } else if (error.request) {
-            return callback("Please check your internet connection to server");
-        } else {
-            return callback(error.message) 
-        }
-    });
+        .then(result => {
+            console.log(result);
+
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
 }
 
-function getInfoProject(id,callback) {
+function getInfoProject(id, callback) {
     /* Check valid input */
     let id_project;
-    if(id==="this"){
+    if (id === "this") {
         id_project = utils.getProjectId();
     } else {
         id_project = id;
     }
-    
+
     axios({
         url: config_api.project + "/" + id_project,
         method: 'GET',
@@ -80,18 +80,18 @@ function getInfoProject(id,callback) {
         },
         data: {}
     })
-    .then(result => {
-        return callback(false, result.data)
-    })
-    .catch(error => {
-        if (error.response) {
-            return callback(error.response)
-        } else if (error.request) {
-            return callback("Please check your internet connection to server");
-        } else {
-            return callback(error.message) 
-        }
-    });
+        .then(result => {
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
 }
 
 module.exports = {

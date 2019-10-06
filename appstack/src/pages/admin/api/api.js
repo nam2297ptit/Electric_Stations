@@ -2,6 +2,39 @@ const config_api = require("../../../config/config").config_api;
 const utils = require("../../../utils/utils");
 const axios = require('axios');
 
+function getInfoProject(id, callback) {
+    console.log(id);
+
+    /* Check valid input */
+    let id_project;
+    if (id === "this") {
+        id_project = utils.getProjectId();
+    } else {
+        id_project = id;
+    }
+
+    axios({
+        url: config_api.project + "/" + id_project,
+        method: 'GET',
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": "Bearer " + utils.getAuthToken()
+        },
+        data: {}
+    })
+        .then(result => {
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
+}
 function getListMemberships(callback) {
     axios({
         url: config_api.admin,
@@ -12,20 +45,20 @@ function getListMemberships(callback) {
         },
         data: {}
     })
-    .then(result => {
-        return callback(false,  result.data)
-    })
-    .catch(error => {
-        if (error.response) {
-            console.log(error.response);
-            
-            return callback(error.response)
-        } else if (error.request) {
-            return callback("Please check your internet connection to server");
-        } else {
-            return callback(error.message) 
-        }
-    });
+        .then(result => {
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                console.log(error.response);
+
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
 }
 function getIdRole(callback) {
     axios({
@@ -37,18 +70,18 @@ function getIdRole(callback) {
         },
         data: {}
     })
-    .then(result => {
-        return callback(false,  result.data)
-    })
-    .catch(error => {
-        if (error.response) {
-            return callback(error.response)
-        } else if (error.request) {
-            return callback("Please check your internet connection to server");
-        } else {
-            return callback(error.message) 
-        }
-    });
+        .then(result => {
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
 }
 
 // function getMemberSuggestions(listMap, callback) {
@@ -68,7 +101,8 @@ function getIdRole(callback) {
 //         }
 //     })
 // }
-function editIsAdmin(dataInput,callback) {
+
+function editIsAdmin(dataInput, callback) {
     axios({
         url: config_api.admin + "/" + dataInput.idMemberChange,
         method: 'PATCH',
@@ -80,20 +114,20 @@ function editIsAdmin(dataInput,callback) {
             "is_admin": dataInput.value
         }
     })
-    .then(result => {
-        return callback(false,  result.data)
-    })
-    .catch(error => {
-        if (error.response) {
-            console.log(error.response);
-            
-            return callback(error.response)
-        } else if (error.request) {
-            return callback("Please check your internet connection to server");
-        } else {
-            return callback(error.message) 
-        }
-    });
+        .then(result => {
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                console.log(error.response);
+
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
 }
 
 // function createMember(listMap,dataInput,callback)  {
@@ -121,10 +155,10 @@ function editIsAdmin(dataInput,callback) {
 //     })
 // }
 
-function deleteMembership(dataInput,callback)  {
+function deleteMembership(dataInput, callback) {
     console.log(config_api.admin + "/" + dataInput)
     axios({
-        url:  config_api.admin + "/" + dataInput,
+        url: config_api.admin + "/" + dataInput,
         method: 'DELETE',
         headers: {
             "Content-type": "application/json",
@@ -133,25 +167,25 @@ function deleteMembership(dataInput,callback)  {
         data: {
         }
     })
-    .then(result => {
-        return callback(false,  result.data)
-    })
-    .catch(error => {
-        if (error.response) {            
-            return callback(error.response)
-        } else if (error.request) {
-            return callback("Please check your internet connection to server");
-        } else {
-            return callback(error.message) 
-        }
-    });
+        .then(result => {
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
 }
 
-function editRole(dataInput, id,callback)  {
-    console.log(dataInput,id);
-    
+function editRole(dataInput, id, callback) {
+    console.log(dataInput, id);
+
     axios({
-        url: config_api.project+ "/add_substation",
+        url: config_api.project + "/add_substation",
         method: 'POST',
         headers: {
             "Content-type": "application/json",
@@ -162,18 +196,18 @@ function editRole(dataInput, id,callback)  {
             "user_id": id
         }
     })
-    .then(result => {
-        return callback(false,  result.data)
-    })
-    .catch(error => {
-        if (error.response) {            
-            return callback(error.response)
-        } else if (error.request) {
-            return callback("Please check your internet connection to server");
-        } else {
-            return callback(error.message) 
-        }
-    });
+        .then(result => {
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
 }
 
 
@@ -184,6 +218,7 @@ module.exports = {
     getIdRole: getIdRole,
     editIsAdmin: editIsAdmin,
     editRole: editRole,
+    getInfoProject: getInfoProject
     // getMemberSuggestions: getMemberSuggestions,
     // createMember: createMember
 }
