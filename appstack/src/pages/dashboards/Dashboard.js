@@ -29,26 +29,28 @@ class Crypto extends React.Component {
   handleChangeType(type) {
     this.setState({ type: type });
   }
-  componentWillMount() {
-    // const that = this;
-    // api.getData((err, result)=>{       
-    // if(err){
-    //     Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-    // } else {
-    //     let element = [];
-    //     let data = [...result];
-    //     data.map((value,index) => {
-    //       element.push(value);
-    //     });
-    //     that.setState({data_tables: element ,data: result[0],data_charts: result, isLoaderAPI: true});
-    //     }
-    // })
-  }
+  // componentWillMount() {
+  //   // const that = this;
+  //   // api.getData((err, result)=>{       
+  //   // if(err){
+  //   //     Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
+  //   // } else {
+  //   //     let element = [];
+  //   //     let data = [...result];
+  //   //     data.map((value,index) => {
+  //   //       element.push(value);
+  //   //     });
+  //   //     that.setState({data_tables: element ,data: result[0],data_charts: result, isLoaderAPI: true});
+  //   //     }
+  //   // })
+  // }
 
   componentDidMount() {
     const that = this;
     const { endpoint } = this.state;
     const sub_id = utils.getStationInfo().sub_id;
+    console.log(sub_id);
+
     const socket = socketIOClient(endpoint, {
       query: {
         token: utils.getAuthToken(),
@@ -68,7 +70,11 @@ class Crypto extends React.Component {
       value_table["time"] = date
       that.setState({ data_tables: [...that.state.data_tables, value_table] })
       var lengtht = that.state.data_tables.length;
-      if (lengtht >= 51) {
+      console.log(lengtht);
+
+      if (lengtht >= 2) {
+        console.log("hello");
+
         that.state.data_tables.unshift();
       }
     });
@@ -82,10 +88,10 @@ class Crypto extends React.Component {
       !this.state.isLoaded ? <p className="text-center">Loading...</p> :
         <Container fluid className="p-0">
           <Row>
-            <Col lg="8" xl="8" className="d-flex">
+            <Col lg="8" md="10" className="d-flex">
               <Statistics data={this.state.data} />
             </Col>
-            <Col lg="4" xl="4" >
+            <Col lg="4" md="2">
               <StationInformation data={this.state.info} />
             </Col>
           </Row>

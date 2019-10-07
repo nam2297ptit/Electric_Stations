@@ -16,13 +16,11 @@ class General extends React.Component {
         super(props);
         this.state = {
             file: null,
-            data: [],
+            data: {},
             isLoaded: false,
             modal: false,
-            id_project: null,
             modalInputPass: false,
             modalCloseAll: false,
-
             changeName: null,
             changeDescription: null,
             changeIsPrivate: null,
@@ -32,18 +30,18 @@ class General extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.toggle = this.toggle.bind(this)
         this.toggleInputPass = this.toggleInputPass.bind(this)
-        this.handleImageChange = this.handleImageChange.bind(this)
     }
 
     handleChange(event) {
-        // let data = Object.assign({}, this.state.data);
-        // data[event.target.name] = event.target.value;
-        // this.setState({data: data});
-        let name = event.target.name
-        let value = event.target.value
-        this.setState({
-            [name]: value
-        });
+        let data = Object.assign({}, this.state.data);
+        data[event.target.name] = event.target.value;
+        this.setState({ data: data });
+
+        // let name = event.target.name
+        // let value = event.target.value
+        // this.setState({
+        //     [name]: value
+        // });
     }
 
     handleChangeType(type) {
@@ -55,64 +53,15 @@ class General extends React.Component {
         });
     }
 
-    handleAddTag(event) {
-        if (event.key === "Enter") {
-            let tag = $("#inputTags").val();
-            if (tag !== "") {
-                let data = Object.assign({}, this.state.data);
-                data.tags.push(tag);
-                this.setState({ data: data });
-                $("#inputTags").val("");
-            }
-        }
-    }
-
-    handleRemoveTag(index) {
-        let data = Object.assign({}, this.state.data);
-        data.tags.splice(index, 1);
-        this.setState({ data: data })
-    }
-
-    handleImageChange(event) {
-        this.setState({
-            changeLogo: event.target.files[0],
-            tempLogo: URL.createObjectURL(event.target.files[0])
-        })
-        // e.preventDefault();
-        // let reader = new FileReader();
-        // let file = e.target.files[0];
-        // const that = this;
-        // let data = Object.assign({}, this.state.data);
-        // reader.onloadend = () => {
-        //     data.logo = reader.result;
-        //     that.setState({
-        //         file: file,
-        //         data: data
-        //     });
-        // };
-
-        // this.props.handleLoading(true);
-        // api.changePhoto(file, (err, result)=>{
-        //     if(err){
-        //         this.props.handleLoading(false);
-        //         Notification("error", "Edit project", "Error when editing project");
-        //     } else {
-        //         this.props.handleLoading(false);
-        //         Notification("success", "Edit project", "Edit project is successfully");
-        //     }
-        // })
-        // reader.readAsDataURL(file)
-    }
 
     handleSaveChange() {
-        this.props.handleLoading(true);
-        api.modifyProject(this.state.id_project, { name: this.state.changeName, description: this.state.changeDescription, is_private: this.state.changeIsPrivate }, (err, result) => {
+        api.modifyStation(this.state.data.sub_id, this.state.data, (err, result) => {
             if (err) {
-                this.props.handleLoading(false)
                 Notification("error", "Error", err.data === undefined ? err : err.status + ' ' + err.data._error_message)
             } else {
-                this.props.handleLoading(false);
-                Notification("success", "Edit project", "Edit project is successfully");
+                console.log(result);
+                localStorage.setItem('project', JSON.stringify(result));
+                Notification("success", "Edit Station", "Edit station is successfully");
             }
         })
     }
@@ -129,30 +78,26 @@ class General extends React.Component {
         });
     }
     handleDelProject() {
-        this.setState(prevState => ({
-            modal: !prevState.modal,
-            modalInputPass: !this.state.modalInputPass,
-            modalCloseAll: true
-        }));
-        api.deleteProject(this.state.id_project, (err, result) => {
+        api.deleteStation(this.state.data.sub_id, (err, result) => {
             if (err) {
                 console.log(err)
                 Notification("error", "Error", err.data === undefined ? err : err.status + ' ' + err.data._error_message)
             } else {
-                window.location.replace('/project')
+                window.location.replace('/stations')
             }
         })
     }
     componentDidMount() {
         const that = this;
-        api.getInfoProject(utils.getProjectId(), (err, result) => {
+        api.getInfoProject(utils.getStationInfo().sub_id, (err, result) => {
             if (err) {
                 Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
             } else {
                 console.log(result);
-
-                // localStorage.setItem('project', JSON.stringify(result));
-                // window.location.replace("/dashboard");
+                that.setState({
+                    data: result
+                })
+                localStorage.setItem('project', JSON.stringify(result));
             }
         });
     }
@@ -164,18 +109,20 @@ class General extends React.Component {
                 <CardBody>
                     <Row>
                         <Col md="8">
-                            <FormGroup>
-                                <Label for="inputStationName">Station name</Label>
-                                <Input
-                                    type="text"
-                                    name="changeName"
-                                    placeholder="Project name"
-                                    autoComplete="off"
-                                    defaultValue={this.state.data.name}
-                                    onChange={this.handleChange}
-                                />
-                            </FormGroup>
                             <Row>
+                                <Col md="6">
+                                    <FormGroup>
+                                        <Label for="inputStationName">Station name</Label>
+                                        <Input
+                                            type="text"
+                                            name="changeName"
+                                            placeholder="Station name"
+                                            autoComplete="off"
+                                            defaultValue={this.state.data.name}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
                                 <Col>
                                     <FormGroup>
                                         <Label for="name_of_manager">Manager</Label>
@@ -188,13 +135,27 @@ class General extends React.Component {
                                         />
                                     </FormGroup>
                                 </Col>
+                            </Row>
+                            <Row>
                                 <Col>
                                     <FormGroup>
-                                        <Label for="name_of_phone">Phone Number</Label>
+                                        <Label for="name_of_address">Address</Label>
                                         <Input
-                                            type="text" name="phone"
+                                            type="text" name="address"
+                                            placeholder="Address station"
+                                            value={this.state.data.address}
+                                            onChange={this.handleChange}
+                                            autoComplete="off"
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Col>
+                                    <FormGroup>
+                                        <Label for="name_of_address">Phone Number</Label>
+                                        <Input
+                                            type="text" name="phone_number"
                                             placeholder="Phone number"
-                                            value={this.state.data.phone}
+                                            value={this.state.data.phone_number}
                                             onChange={this.handleChange}
                                             autoComplete="off"
                                         />
@@ -205,11 +166,11 @@ class General extends React.Component {
                             <Row>
                                 <Col>
                                     <FormGroup>
-                                        <Label for="name_of_id">ID</Label>
+                                        <Label for="name_of_volt_low">Time Update</Label>
                                         <Input
-                                            type="text" name="sub_id"
-                                            placeholder="ID station"
-                                            value={this.state.data.sub_id}
+                                            type="text" name="time_update"
+                                            placeholder="minute"
+                                            value={this.state.data.time_update}
                                             onChange={this.handleChange}
                                             autoComplete="off"
                                         />
@@ -219,11 +180,11 @@ class General extends React.Component {
                                     <Row>
                                         <Col>
                                             <FormGroup xs="6">
-                                                <Label for="name_of_volt_hight">Volt Hight</Label>
+                                                <Label for="name_of_volt_high">Volt High</Label>
                                                 <Input
-                                                    type="text" name="volt_hight"
+                                                    type="text" name="volt_high"
                                                     placeholder="V"
-                                                    value={this.state.data.volt_hight}
+                                                    value={this.state.data.volt_high}
                                                     onChange={this.handleChange}
                                                     autoComplete="off"
                                                 />
@@ -249,11 +210,11 @@ class General extends React.Component {
                                     <Row>
                                         <Col>
                                             <FormGroup xs="6">
-                                                <Label for="name_of_temp_hight">Temp Hight</Label>
+                                                <Label for="name_of_temp_high">Temp High</Label>
                                                 <Input
-                                                    type="text" name="temp_hight"
+                                                    type="text" name="temp_high"
                                                     placeholder="°C"
-                                                    value={this.state.data.temp_hight}
+                                                    value={this.state.data.temp_high}
                                                     onChange={this.handleChange}
                                                     autoComplete="off"
                                                 />
@@ -261,11 +222,11 @@ class General extends React.Component {
                                         </Col>
                                         <Col>
                                             <FormGroup>
-                                                <Label for="name_of_oil_temp_low">Oil Temp Hight</Label>
+                                                <Label for="name_of_oil_temp_low">Oil Temp High</Label>
                                                 <Input
-                                                    type="text" name="oil_temp_hight"
+                                                    type="text" name="oil_temp_high"
                                                     placeholder="°C"
-                                                    value={this.state.data.oil_temp_hight}
+                                                    value={this.state.data.oil_temp_high}
                                                     onChange={this.handleChange}
                                                     autoComplete="off"
                                                 />
@@ -276,12 +237,12 @@ class General extends React.Component {
                                 <Col>
                                     <Row>
                                         <Col>
-                                            <FormGroup xs="6">
-                                                <Label for="name_of_volt_hight">Current Hight</Label>
+                                            <FormGroup>
+                                                <Label for="name_of_current_hight">Current High</Label>
                                                 <Input
-                                                    type="text" name="curent_hight"
+                                                    type="text" name="current_high"
                                                     placeholder="A"
-                                                    value={this.state.data.current_hight}
+                                                    value={this.state.data.current_high}
                                                     onChange={this.handleChange}
                                                     autoComplete="off"
                                                 />
@@ -289,11 +250,11 @@ class General extends React.Component {
                                         </Col>
                                         <Col>
                                             <FormGroup>
-                                                <Label for="name_of_volt_low">Time Update</Label>
+                                                <Label for="name_of_KI">KI</Label>
                                                 <Input
-                                                    type="text" name="time_update"
-                                                    placeholder="minute"
-                                                    value={this.state.data.time_update}
+                                                    type="text" name="KI"
+                                                    placeholder="KI"
+                                                    value={this.state.data.KI}
                                                     onChange={this.handleChange}
                                                     autoComplete="off"
                                                 />
@@ -304,22 +265,6 @@ class General extends React.Component {
                             </Row>
                         </Col>
                         <Col md="4" className="mt-3">
-                            {/* <div className="text-center">
-                                <Label for="logoChange">
-                                    <CustomImg
-                                        alt="Avatar project"
-                                        src={this.state.tempLogo || this.state.changeLogo}
-                                        className="rounded-circle img-responsive mt-2 admin__imgUpdate"
-                                        width="128"
-                                        height="128"
-                                    />
-                                </Label>
-                                <Input type="file" id="logoChange" hidden onChange={this.handleImageChange} />
-                                <div><small>
-                                    For best results, use an image at least 128px by 128px in .jpg
-                                    format
-                                </small></div>
-                            </div> */}
                             <Map data={this.state.data} />
                         </Col>
                     </Row>
@@ -329,40 +274,13 @@ class General extends React.Component {
                             <Button type="button" color="primary" onClick={this.handleSaveChange.bind(this)}>Save changes</Button>
                         </Col>
                         <Col md="2" className="pr-4">
-                            <Button type="button" color="danger" onClick={this.toggleInputPass}>Delete project</Button>
-                            <Modal isOpen={this.state.modalInputPass} toggle={this.toggleInputPass}>
-                                <ModalHeader>Confirm</ModalHeader>
-                                <ModalBody>
-                                    <FormGroup>
-                                        <Label>Password</Label>
-                                        <Input
-                                            type="password"
-                                            placeholder="Please enter your password"
-                                            autoComplete="off"
-                                        // onChange={this.handleChange}
-                                        />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label>Repassword</Label>
-                                        <Input
-                                            type="password"
-                                            placeholder="Please enter your password again"
-                                            autoComplete="off"
-                                        // onChange={this.handleChange}
-                                        />
-                                    </FormGroup>
-                                </ModalBody>
-                                <ModalFooter>
-                                    <Button color="success" onClick={this.toggle}>OK</Button>
-                                    <Button color="secondary" onClick={this.toggleInputPass}>Cancel</Button>
-                                </ModalFooter>
-                            </Modal>
+                            <Button type="button" color="danger" onClick={this.toggle}>Delete project</Button>
                             <Modal isOpen={this.state.modal} toggle={this.toggle}>
                                 <ModalHeader>Confirm</ModalHeader>
                                 <ModalBody>Are you sure delete this project?</ModalBody>
                                 <ModalFooter>
-                                    <Button color="success" onClick={this.handleDelProject.bind(this)}>OK</Button>
                                     <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                                    <Button color="success" onClick={this.handleDelProject.bind(this)}>OK</Button>
                                 </ModalFooter>
                             </Modal>
                         </Col>

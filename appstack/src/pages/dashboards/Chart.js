@@ -43,60 +43,99 @@ class Chart extends React.Component {
   render() {
     const data = this.props.data;
     console.log(data);
-    
+
     const type = this.props.type;
-    const UA = data.map(({time, UA },key)=>{
+    const UA = data.map(({ time, UA }, key) => {
       let x = time;
       let y = UA;
-      return {x,y} 
+      return { x, y }
     })
-    console.log(UA);
-    
-    const UB = data.map(({time, UB },key)=>{
+
+    const UB = data.map(({ time, UB }, key) => {
       let x = time;
       let y = UB;
-      return {x,y} 
+      return { x, y }
     })
-    const UC = data.map(({time, UC },key)=>{
+    const UC = data.map(({ time, UC }, key) => {
       let x = time;
       let y = UC;
-      return {x,y} 
+      return { x, y }
     })
-    const PA = data.map(({time, PA },key)=>{
+    const PA = data.map(({ time, PA }, key) => {
       let x = time;
       let y = PA;
-      return {x,y} 
+      return { x, y }
     })
-    const PB = data.map(({time, PB },key)=>{
+    const PB = data.map(({ time, PB }, key) => {
       let x = time;
       let y = PB;
-      return {x,y} 
+      return { x, y }
     })
-    const PC = data.map(({time, PC },key)=>{
+    const PC = data.map(({ time, PC }, key) => {
       let x = time;
       let y = PC;
-      return {x,y} 
+      return { x, y }
     })
-    const IA = data.map(({time, IA },key)=>{
+    const IA = data.map(({ time, IA }, key) => {
       let x = time;
       let y = IA;
-      return {x,y} 
+      return { x, y }
     })
-    const IB = data.map(({time, IB },key)=>{
+    const IB = data.map(({ time, IB }, key) => {
       let x = time;
       let y = IB;
-      return {x,y} 
+      return { x, y }
     })
-    const IC = data.map(({time, IC },key)=>{
+    const IC = data.map(({ time, IC }, key) => {
       let x = time;
       let y = IC;
-      return {x,y} 
+      return { x, y }
     })
-    
+    const QA = data.map(({ time, QA }, key) => {
+      let x = time;
+      let y = QA;
+      return { x, y }
+    })
+    const QB = data.map(({ time, QB }, key) => {
+      let x = time;
+      let y = QB;
+      return { x, y }
+    })
+    const QC = data.map(({ time, QC }, key) => {
+      let x = time;
+      let y = QC;
+      return { x, y }
+    })
+    const hum = data.map(({ time, hum }, key) => {
+      let x = time;
+      let y = hum;
+      return { x, y }
+    })
+    const temp = data.map(({ time, temp }, key) => {
+      let x = time;
+      let y = temp;
+      return { x, y }
+    })
+    const oil = data.map(({ time, oil }, key) => {
+      let x = time;
+      let y = oil;
+      return { x, y }
+    })
+    const freq = data.map(({ time, freq }, key) => {
+      let x = time;
+      let y = freq;
+      return { x, y }
+    })
+    const Pgiao = data.map(({ time, Pgiao }, key) => {
+      let x = time;
+      let y = Pgiao;
+      return { x, y }
+    })
+
     return (
       <Card className="flex-fill">
         <CardHeader>
-          <CardTitle tag="h5" className="mb-0">SSS</CardTitle>
+          <CardTitle tag="h5" className="mb-0">Evaluation Chart</CardTitle>
         </CardHeader>
         <CardBody>
           <div className="chart">
@@ -104,50 +143,91 @@ class Chart extends React.Component {
               options={this.options}
               series={
                 type === "volt" ?
-                [
-                  {
-                    name: "UA",
-                    data: UA
-                  },
-                  {
-                    name: "UB",
-                    data: UB
-                  },
-                  {
-                    name: "UC",
-                    data: UC
-                  }
-                ]
-                : type === "ample" ?
-                [
-                  {
-                    name: "IA",
-                    data: IA
-                  },
-                  {
-                    name: "IB",
-                    data: IB
-                  },
-                  {
-                    name: "IC",
-                    data: IC
-                  }
-                ]
-                :
-                [
-                  {
-                    name: "PA",
-                    data: PA
-                  },
-                  {
-                    name: "PB",
-                    data: PB
-                  },
-                  {
-                    name: "PC",
-                    data: PC
-                  }
-                ]
+                  [
+                    {
+                      name: "UA",
+                      data: UA
+                    },
+                    {
+                      name: "UB",
+                      data: UB
+                    },
+                    {
+                      name: "UC",
+                      data: UC
+                    }
+                  ]
+                  : type === "ample" ?
+                    [
+                      {
+                        name: "IA",
+                        data: IA
+                      },
+                      {
+                        name: "IB",
+                        data: IB
+                      },
+                      {
+                        name: "IC",
+                        data: IC
+                      }
+                    ]
+                    : type === "wattage" ?
+                      [
+                        {
+                          name: "PA",
+                          data: PA
+                        },
+                        {
+                          name: "PB",
+                          data: PB
+                        },
+                        {
+                          name: "PC",
+                          data: PC
+                        }
+                      ]
+                      : type === "reactive" ?
+                        [
+                          {
+                            name: "QA",
+                            data: QA
+                          },
+                          {
+                            name: "QB",
+                            data: QB
+                          },
+                          {
+                            name: "QC",
+                            data: QC
+                          }
+                        ]
+                        : type === "sensors" ?
+                          [
+                            {
+                              name: "Humidity",
+                              data: hum
+                            },
+                            {
+                              name: "Temperature",
+                              data: temp
+                            },
+                            {
+                              name: "Oil Temperature",
+                              data: oil
+                            }
+                          ]
+                          :
+                          [
+                            {
+                              name: "Frequency",
+                              data: freq
+                            },
+                            {
+                              name: "Pgiao",
+                              data: Pgiao
+                            }
+                          ]
               }
               type="line"
               height="350"

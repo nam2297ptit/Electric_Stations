@@ -99,8 +99,16 @@ class Project extends React.Component {
             type: event.target.value
         })
     }
-    handleCreateProject() {
+    handleCreateProject(event) {
+        // event.preventDefault();
         this.setState({ submitted: true });
+        // const { name, manager, sub_id, phone_number, temp_high, oil_temp_high, volt_high, volt_low, current_high } = this.state;
+
+        // // stop here if form is invalid
+        // if (!(name && manager && sub_id && phone_number && temp_high && oil_temp_high && volt_high && volt_low && current_high)) {
+        //     return;
+        // }
+
         // stop here if form is invalid
         api.createProject(this.state.temp, (err, result) => {
             if (err) {
@@ -148,9 +156,9 @@ class Project extends React.Component {
                                 <FormGroup>
                                     <Label for="name_of_phone">Phone Number</Label>
                                     <Input
-                                        type="text" name="phone"
+                                        type="text" name="phone_number"
                                         placeholder="Phone number"
-                                        value={this.state.temp.phone}
+                                        value={this.state.temp.phone_number}
                                         onChange={this.handleChange}
                                         size="sm"
                                         autoComplete="off"
@@ -161,27 +169,47 @@ class Project extends React.Component {
 
                         <Row>
                             <Col>
-                                <FormGroup>
-                                    <Label for="name_of_id">ID</Label>
-                                    <Input
-                                        type="text" name="sub_id"
-                                        placeholder="ID station"
-                                        value={this.state.temp.sub_id}
-                                        onChange={this.handleChange}
-                                        size="sm"
-                                        autoComplete="off"
-                                    />
-                                </FormGroup>
+                                <Row>
+                                    <Col>
+                                        <FormGroup>
+                                            <Label for="name_of_id">ID</Label>
+                                            <Input
+                                                type="text" name="sub_id"
+                                                placeholder="ID station"
+                                                value={this.state.temp.sub_id}
+                                                onChange={this.handleChange}
+                                                size="sm"
+                                                autoComplete="off"
+                                                pattern=".{6,}"
+                                                required
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col>
+                                        <FormGroup>
+                                            <Label for="name_of_ki">KI</Label>
+                                            <Input
+                                                type="text" name="KI"
+                                                placeholder="KI"
+                                                value={this.state.temp.KI}
+                                                onChange={this.handleChange}
+                                                size="sm"
+                                                autoComplete="off"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+
                             </Col>
                             <Col>
                                 <Row>
                                     <Col>
                                         <FormGroup xs="6">
-                                            <Label for="name_of_volt_hight">Volt Hight</Label>
+                                            <Label for="name_of_volt_high">Volt High</Label>
                                             <Input
-                                                type="text" name="volt_hight"
+                                                type="text" name="volt_high"
                                                 placeholder="V"
-                                                value={this.state.temp.volt_hight}
+                                                value={this.state.temp.volt_high}
                                                 onChange={this.handleChange}
                                                 size="sm"
                                                 autoComplete="off"
@@ -209,11 +237,11 @@ class Project extends React.Component {
                                 <Row>
                                     <Col>
                                         <FormGroup xs="6">
-                                            <Label for="name_of_temp_hight">Temp Hight</Label>
+                                            <Label for="name_of_temp_high">Temp High</Label>
                                             <Input
-                                                type="text" name="temp_hight"
+                                                type="text" name="temp_high"
                                                 placeholder="°C"
-                                                value={this.state.temp.temp_hight}
+                                                value={this.state.temp.temp_high}
                                                 onChange={this.handleChange}
                                                 size="sm"
                                                 autoComplete="off"
@@ -222,11 +250,11 @@ class Project extends React.Component {
                                     </Col>
                                     <Col>
                                         <FormGroup>
-                                            <Label for="name_of_oil_temp_low">Oil Temp Hight</Label>
+                                            <Label for="name_of_oil_temp_high">Oil Temp High</Label>
                                             <Input
-                                                type="text" name="oil_temp_hight"
+                                                type="text" name="oil_temp_high"
                                                 placeholder="°C"
-                                                value={this.state.temp.oil_temp_hight}
+                                                value={this.state.temp.oil_temp_high}
                                                 onChange={this.handleChange}
                                                 size="sm"
                                                 autoComplete="off"
@@ -239,11 +267,11 @@ class Project extends React.Component {
                                 <Row>
                                     <Col>
                                         <FormGroup xs="6">
-                                            <Label for="name_of_volt_hight">Current Hight</Label>
+                                            <Label for="name_of_volt_high">Current High</Label>
                                             <Input
-                                                type="text" name="curent_hight"
+                                                type="text" name="current_high"
                                                 placeholder="A"
-                                                value={this.state.temp.current_hight}
+                                                value={this.state.temp.current_high}
                                                 onChange={this.handleChange}
                                                 size="sm"
                                                 autoComplete="off"

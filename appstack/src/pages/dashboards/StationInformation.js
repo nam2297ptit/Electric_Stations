@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
-  CardBody
+  CardBody,
+  Media
 } from "reactstrap";
 import {
   Tabs, Tab
@@ -10,7 +11,8 @@ import {
 import {
   Briefcase,
   Home,
-  MapPin
+  MapPin,
+  Square,
 } from "react-feather";
 import Map from "./Map";
 class StationInformation extends React.Component {
@@ -37,7 +39,7 @@ class StationInformation extends React.Component {
       <React.Fragment>
         <Tabs defaultActiveKey="info"  >
           <Tab eventKey="info" title="Station information">
-            <Card className="flex-fill w-100" style={{ height: 280, width: "100%" }}>
+            <Card className="flex-fill w-100" style={{ height: 270, width: "100%" }}>
               <CardBody className="my-0">
                 <h3 className="text-center">{data.sub_id}</h3>
                 <ul className="list-unstyled mb-0">
@@ -58,6 +60,31 @@ class StationInformation extends React.Component {
                     <Link to="#">{data.manager}</Link>
                   </li>
                 </ul>
+              </CardBody>
+            </Card>
+            <Card className="flex-fill pt-2 pb-2" >
+              <CardBody className="d-flex justify-content-center">
+                <Media className="d-inline ml-1 mr-1" xs="4">
+                  <Square className="feather-md" fill="#3fd932" />
+                </Media>
+                <Media className="d-inline ml-1 mr-1" xs="4">
+                  <Square className="feather-md" fill="#cddb27" />
+                </Media>
+                <Media className="d-inline ml-1 mr-1" xs="4">
+                  <Square className="feather-md" fill="#e6eb05" />
+                </Media>
+                <Media className="d-inline ml-1 mr-1" xs="4">
+                  <Square className="feather-md" fill="#ff9900" />
+                </Media>
+                <Media className="d-inline ml-1 mr-1" xs="4">
+                  <Square className="feather-md" fill="#ff1f00" />
+                </Media>
+                <Media className="d-inline ml-1 mr-1" xs="4">
+                  <Square className="feather-md" fill="#ff1f00" />
+                </Media>
+                <Media className="d-inline ml-1 mr-1" xs="4">
+                  <Square className="feather-md" fill="#ff1f00" />
+                </Media>
               </CardBody>
             </Card>
           </Tab>

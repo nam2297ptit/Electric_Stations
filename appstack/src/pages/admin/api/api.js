@@ -209,8 +209,57 @@ function editRole(dataInput, id, callback) {
             }
         });
 }
+function deleteStation(id, callback) {
+    console.log(id);
 
+    axios({
+        url: config_api.project + "/" + id,
+        method: 'DELETE',
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": "Bearer " + utils.getAuthToken()
+        },
+        data: {}
+    })
+        .then(result => {
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
+}
 
+function modifyStation(id, data, callback) {
+    console.log(id);
+    console.log(data);
+    axios({
+        url: config_api.project + "/" + id,
+        method: 'PATCH',
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": "Bearer " + utils.getAuthToken()
+        },
+        data: data
+    })
+        .then(result => {
+            return callback(false, result.data)
+        })
+        .catch(error => {
+            if (error.response) {
+                return callback(error.response)
+            } else if (error.request) {
+                return callback("Please check your internet connection to server");
+            } else {
+                return callback(error.message)
+            }
+        });
+}
 
 module.exports = {
     getListMemberships: getListMemberships,
@@ -218,7 +267,9 @@ module.exports = {
     getIdRole: getIdRole,
     editIsAdmin: editIsAdmin,
     editRole: editRole,
-    getInfoProject: getInfoProject
+    getInfoProject: getInfoProject,
+    deleteStation: deleteStation,
+    modifyStation: modifyStation
     // getMemberSuggestions: getMemberSuggestions,
     // createMember: createMember
 }

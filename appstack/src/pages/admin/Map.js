@@ -41,7 +41,7 @@ class Maps extends React.Component {
   }
   render() {
     return (
-      <Row style={{ width: '100%', height: 300 }} className="mb-2 pl-3">
+      <Row style={{ width: '100%', height: 250 }} className="mb-2 pl-3">
         <GoogleMapReact
           options={this.getMapOptions}
           bootstrapURLKeys={{

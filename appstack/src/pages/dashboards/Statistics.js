@@ -1,7 +1,70 @@
 import React from "react";
 import { Col, Card, CardBody, CardHeader, Row, Media } from "reactstrap";
-import { Slack, TrendingUp, Zap } from "react-feather";
-import { Droplet, Thermometer, Activity, Square, AlertTriangle } from "react-feather";
+import { Slack, TrendingUp, Zap, Cpu, Clock } from "react-feather";
+import { Droplet, Thermometer, Activity } from "react-feather";
+import moment from 'moment'
+import "./Statistics.css";
+const utils = require("../../utils/utils");
+function convertToClassName(data, ID) {
+  const { volt_high, volt_low, current_high, temp_high, oil_high } = utils.getStationInfo();
+  /*----U----*/
+  if (data <= volt_low && ID === "UA") {
+    return "U_red";
+  }
+  else if (data >= volt_high && ID === "UB") {
+    return "U_red";
+  }
+  else if (data <= volt_low && ID === "UB") {
+    return "U_red";
+  }
+  else if (data >= volt_high && ID === "UB") {
+    return "U_red";
+  }
+  else if (data <= volt_low && ID === "UC") {
+    return "U_red";
+  }
+  else if (data >= volt_high && ID === "UC") {
+    return "U_red";
+  }
+  /*----I----*/
+  else if (data >= current_high * 30 / 100 && data <= current_high * 70 / 100 && ID === "IA") {
+    return "I_orange";
+  }
+  else if (data > current_high * 70 / 100 && ID === "IA") {
+    return "I_red";
+  }
+  else if (data >= current_high * 30 / 100 && data <= current_high * 70 / 100 && ID === "IB") {
+    return "I_orange";
+  }
+  else if (data > current_high * 70 / 100 === "IB") {
+    return "I_red";
+  }
+  else if (data >= current_high * 30 / 100 && data <= current_high * 70 / 100 && ID === "IC") {
+    return "I_orange";
+  }
+  else if (data > current_high * 70 / 100 === "IC") {
+    return "I_red";
+  }
+  /*----Temperature----*/
+  else if (data >= oil_high + 10 && data < oil_high + 20 && ID === "oil") {
+    return "oil_yellow";
+  }
+  else if (data >= oil_high + 20 && data < oil_high + 30 && ID === "oil") {
+    return "oil_orange";
+  }
+  else if (data > oil_high + 30 && ID === "oil") {
+    return "oil_red";
+  }
+  else if (data >= temp_high + 10 && data < temp_high + 20 && ID === "temp") {
+    return "temp_yellow";
+  }
+  else if (data >= temp_high + 20 && data < temp_high + 30 && ID === "temp") {
+    return "temp_orange";
+  }
+  else if (data > temp_high + 30 && ID === "temp") {
+    return "temp_red";
+  }
+}
 class Statistics extends React.Component {
   constructor(props) {
     super(props);
@@ -23,35 +86,35 @@ class Statistics extends React.Component {
               <CardBody>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
-                      <Zap className="feather-md text-primary mb-1 mr-2" color="lightblue" />
+                    <h3 className="font-weight-light ">
+                      <Zap className="feather-md text-primary mb-1 mr-2 " color="lightblue" />
                       UA
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.UA}</h4>
+                    <h3 className={"mb-1 text-center " + convertToClassName(data.UA, "UA")}>{data.UA}</h3>
                   </Media>
                 </Media>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Zap className="feather-md text-warning mb-1 mr-2" color="lightblue" />
                       UB
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.UB}</h4>
+                    <h3 className={"mb-1 text-center text-center " + convertToClassName(data.UB, "UB")}>{data.UB}</h3>
                   </Media>
                 </Media>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Zap className="feather-md text-danger mb-1 mr-2" color="lightblue" />
                       UC
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.UC}</h4>
+                    <h3 className={"mb-1 text-center " + convertToClassName(data.UC, "UC")}>{data.UC}</h3>
                   </Media>
                 </Media>
               </CardBody>
@@ -66,35 +129,35 @@ class Statistics extends React.Component {
               <CardBody>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <TrendingUp className="feather-md text-primary mb-1 mr-2" color="lightblue" />
                       IA
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.IA}</h4>
+                    <h3 className={"mb-1 text-center " + convertToClassName(data.IA, "IA")}>{data.IA}</h3>
                   </Media>
                 </Media>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <TrendingUp className="feather-md text-warning mb-1 mr-2" color="lightblue" />
                       IB
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.IB}</h4>
+                    <h3 className={"mb-1 text-center " + convertToClassName(data.IB, "IB")}>{data.IB}</h3>
                   </Media>
                 </Media>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <TrendingUp className="feather-md mb-1 mr-2" color="lightblue" />
                       IC
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.IC}</h4>
+                    <h3 className={"mb-1 text-center " + convertToClassName(data.IC, "IC")}>{data.IC}</h3>
                   </Media>
                 </Media>
               </CardBody>
@@ -109,35 +172,35 @@ class Statistics extends React.Component {
               <CardBody>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Slack className="feather-md mb-1 mr-2" color="lightblue" />
                       PA
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.PA}</h4>
+                    <h3 className={"mb-1 text-center "}>{data.PA}</h3>
                   </Media>
                 </Media>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Slack className="feather-md mb-1 mr-2" color="lightblue" />
                       PB
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.PB}</h4>
+                    <h3 className={"mb-1 text-center "}>{data.PB}</h3>
                   </Media>
                 </Media>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Slack className="feather-md mb-1 mr-2" color="lightblue" />
                       PC
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.PC}</h4>
+                    <h3 className={"mb-1 text-center "}>{data.PC}</h3>
                   </Media>
                 </Media>
               </CardBody>
@@ -152,35 +215,35 @@ class Statistics extends React.Component {
               <CardBody>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Slack className="feather-md  mb-1 mr-2" color="lightblue" />
                       QA
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.QA}</h4>
+                    <h3 className={"mb-1 text-center "}>{data.QA}</h3>
                   </Media>
                 </Media>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Slack className="feather-md mb-1 mr-2" color="lightblue" />
                       QB
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.QB}</h4>
+                    <h3 className={"mb-1 text-center "}>{data.QB}</h3>
                   </Media>
                 </Media>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Slack className="feather-md mb-1 mr-2" color="lightblue" />
                       QC
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.QC}</h4>
+                    <h3 className={"mb-1 text-center "}>{data.QC}</h3>
                   </Media>
                 </Media>
               </CardBody>
@@ -197,35 +260,35 @@ class Statistics extends React.Component {
               <CardBody>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Slack className="feather-md mb-1 mr-2" color="lightblue" />
                       CosA
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.cosA}</h4>
+                    <h3 className={"mb-1 text-center "}>{data.cosA}</h3>
                   </Media>
                 </Media>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Slack className="feather-md mb-1 mr-2" color="lightblue" />
                       CosB
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.cosB}</h4>
+                    <h3 className={"mb-1 text-center "}>{data.cosB}</h3>
                   </Media>
                 </Media>
                 <Media>
                   <div className="d-inline-block mr-3">
-                    <h4 className="font-weight-light ">
+                    <h3 className="font-weight-light ">
                       <Slack className="feather-md mb-1 mr-2" color="lightblue" />
                       CosC
-                    </h4>
+                    </h3>
                   </div>
                   <Media body>
-                    <h4 className="mb-1 text-right">{data.cosC}</h4>
+                    <h3 className={"mb-1 text-center "}>{data.cosC}</h3>
                   </Media>
                 </Media>
               </CardBody>
@@ -235,15 +298,15 @@ class Statistics extends React.Component {
             <Row>
               <Col md="4" className="pb-1 pr-3">
                 <Card className="flex-fill">
-                  <CardBody className="pt-3 pb-2">
+                  <CardBody className="pt-3 pb-1">
                     <Media>
                       <div className="d-inline-block mr-3">
                         <Droplet className="feather-lg" color="lightblue" />
                       </div>
                       <Media body>
                         <Media body>
-                          <h4>{data.hum} %</h4>
-                          <h7 className="mt-1">Humidity</h7>
+                          <h3>{data.hum} %</h3>
+                          <h6 className="mt-1">Humidity</h6>
                         </Media>
                       </Media>
                     </Media>
@@ -252,12 +315,12 @@ class Statistics extends React.Component {
               </Col>
               <Col md="4" className="pb-1 pr-3">
                 <Card className="flex-fill p-0">
-                  <CardBody className="pt-3 pb-2">
+                  <CardBody className="pt-3 pb-1">
                     <Media>
                       <Thermometer className="feather-lg" color="lightblue" />
                       <Media body>
-                        <h4>{data.temp} °C</h4>
-                        <h7 className="mt-1">Temperature</h7>
+                        <h3 className={convertToClassName(data.temp, "temp")}>{data.temp} °C</h3>
+                        <h6 className="mt-1">Temperature</h6>
                       </Media>
                     </Media>
                   </CardBody>
@@ -265,14 +328,14 @@ class Statistics extends React.Component {
               </Col>
               <Col md="4" className="pb-1 pr-3">
                 <Card className="flex-fill">
-                  <CardBody className="pt-3 pb-2">
+                  <CardBody className="pt-3 pb-1">
                     <Media>
                       <div className="d-inline-block mr-3">
                         <Thermometer className="feather-lg" color="lightblue" />
                       </div>
                       <Media body>
-                        <h4>{data.oil} °C</h4>
-                        <h7 className="mt-1">Oil Temperature</h7>
+                        <h3 className={convertToClassName(data.oil, "oil")}>{data.oil} °C</h3>
+                        <h6 className="mt-1">Oil Temperature</h6>
                       </Media>
                     </Media>
                   </CardBody>
@@ -282,49 +345,51 @@ class Statistics extends React.Component {
             <Row>
               <Col md="4" className="pb-1 pr-3">
                 <Card className="flex-fill">
-                  <CardBody className="pt-3 pb-2">
+                  <CardBody className="pt-3 pb-1">
                     <Media>
                       <div className="d-inline-block mr-3">
                         <Activity className="feather-lg" color="lightblue" />
                       </div>
                       <Media body>
-                        <h4>{data.freq} Hz</h4>
-                        <h7 className="mt-1">Frequency</h7>
+                        <h3>{data.freq} Hz</h3>
+                        <h6 className="mt-1">Frequency</h6>
                       </Media>
                     </Media>
                   </CardBody>
                 </Card>
               </Col>
-              <Col md="8" className="mb-1 pr-3 ">
-                <Card className="flex-fill pt-1 pb-1" >
-                  <CardBody className="d-flex justify-content-center">
-                    <Media className="d-inline ml-3 mr-3" xs="4">
-                      <Square className="feather-md" fill="#3fd932" />
+              <Col md="4" className="pb-1 pr-3">
+                <Card className="flex-fill">
+                  <CardBody className="pt-3 pb-1">
+                    <Media>
+                      <div className="d-inline-block mr-3">
+                        <Cpu className="feather-lg" color="lightblue" />
+                      </div>
+                      <Media body>
+                        <h3>{data.Pgiao} kW</h3>
+                        <h6 className="mt-1">Pgiao</h6>
+                      </Media>
                     </Media>
-                    <Media className="d-inline ml-3 mr-3" xs="4">
-                      <Square className="feather-md" fill="#cddb27" />
-                    </Media>
-                    <Media className="d-inline ml-3 mr-3" xs="4">
-                      <Square className="feather-md" fill="#e6eb05" />
-                    </Media>
-                    <Media className="d-inline ml-3 mr-3" xs="4">
-                      <Square className="feather-md" fill="#ff9900" />
-                    </Media>
-                    <Media className="d-inline ml-3 mr-3" xs="4">
-                      <Square className="feather-md" fill="#ff1f00" />
-                    </Media>
-                    <Media className="d-inline ml-3 mr-3" xs="4">
-                      <Square className="feather-md" fill="#ff1f00" />
-                    </Media>
-                    <Media className="d-inline ml-3 mr-3" xs="4">
-                      <Square className="feather-md" fill="#ff1f00" />
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md="4" className="mb-2 pr-3 ">
+                <Card className="flex-fill">
+                  <CardBody className="pt-2 pb-2 mt-2">
+                    <Media>
+                      <div className="d-inline-block mr-3">
+                        <Clock className="feather-lg" color="lightblue" />
+                      </div>
+                      <Media body>
+                        <h4><strong>{moment(data.time).format('h:mm:ss a')}</strong></h4>
+                        <h6 className="mt-2">Time Update</h6>
+                      </Media>
                     </Media>
                   </CardBody>
                 </Card>
               </Col>
             </Row>
           </Col>
-
         </Row>
 
       </div>
@@ -335,23 +400,23 @@ class Statistics extends React.Component {
 <CardBody>
   <Media className="d-inline" xs="4">
     <Square className="feather-md" fill="#3fd932" />
-    <h7 className="mt-1 ml-2">Normal</h7>
+    <h6 className="mt-1 ml-2">Normal</h6>
   </Media>
   <Media className="d-inline ml-2" xs="4">
     <Square className="feather-md" fill="#cddb27" />
-    <h7 className="mt-1 ml-2">Hight</h7>
+    <h6 className="mt-1 ml-2">Hight</h6>
   </Media>
   <Media className="d-inline ml-2" xs="4">
     <Square className="feather-md" fill="#e6eb05" />
-    <h7 className="mt-1 ml-2">Attention</h7>
+    <h6 className="mt-1 ml-2">Attention</h6>
   </Media>
   <Media className="d-inline ml-2" xs="4">
     <Square className="feather-md" fill="#ff9900" />
-    <h7 className="mt-1 ml-2">Warning</h7>
+    <h6 className="mt-1 ml-2">Warning</h6>
   </Media>
   <Media className="d-inline ml-2" xs="4">
     <Square className="feather-md" fill="#ff1f00" />
-    <h7 className="mt-1 ml-2">Danger</h7>
+    <h6 className="mt-1 ml-2">Danger</h6>
   </Media>
 </CardBody>
 </Card> */}

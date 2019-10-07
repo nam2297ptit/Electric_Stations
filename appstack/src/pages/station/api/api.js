@@ -16,10 +16,13 @@ function createProject(data, callback) {
             name: data.name,
             manager: data.manager,
             sub_id: data.sub_id,
-            location: {
-                longitude: data.location.longitude,
-                latitude: data.location.latitude
-            }
+            current_high: data.current_high,
+            temp_high: data.temp_high,
+            volt_high: data.volt_high,
+            volt_low: data.volt_low,
+            phone_number: data.phone_number,
+            KI: data.KI,
+            oil_temp_high: data.oil_temp_high
         }
     })
         .then(result => {
