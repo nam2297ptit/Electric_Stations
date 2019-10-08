@@ -17,39 +17,42 @@ class Crypto extends React.Component {
       data: [],
       data_tables: [],
       data_charts: [],
+      dataFault: {
+        fault: "00000000"
+      },
+      status: false,
       info: [],
       isLoaded: false,
       isLoaderAPI_EvaluationList: false,
       type: null,
       response: false,
-      endpoint: config_socket.ip
+      endpoint: config_socket.ip,
     };
     this.handleChangeType = this.handleChangeType.bind(this);
   }
   handleChangeType(type) {
     this.setState({ type: type });
   }
-  // componentWillMount() {
-  //   // const that = this;
-  //   // api.getData((err, result)=>{       
-  //   // if(err){
-  //   //     Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-  //   // } else {
-  //   //     let element = [];
-  //   //     let data = [...result];
-  //   //     data.map((value,index) => {
-  //   //       element.push(value);
-  //   //     });
-  //   //     that.setState({data_tables: element ,data: result[0],data_charts: result, isLoaderAPI: true});
-  //   //     }
-  //   // })
-  // }
+  componentWillMount() {
+    const that = this;
+    // api.getData((err, result) => {
+    //   if (err) {
+    //     Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
+    //   } else {
+    //     let element = [];
+    //     let data = [...result];
+    //     data.map((value, index) => {
+    //       element.push(value);
+    //     });
+    //     that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
+    //   }
+    // })
+  }
 
   componentDidMount() {
     const that = this;
     const { endpoint } = this.state;
     const sub_id = utils.getStationInfo().sub_id;
-    console.log(sub_id);
 
     const socket = socketIOClient(endpoint, {
       query: {
@@ -57,12 +60,22 @@ class Crypto extends React.Component {
         sub_id: sub_id
       }
     });
+
+    socket.on('connect', function () {
+      console.log("connected");
+      that.setState({ status: true });
+    });
+    socket.on('disconnect', function () {
+      console.log("disconect");
+      that.setState({ status: true });
+    });
     socket.on("substation_" + sub_id, function (value) {
+      that.setState({ dataFault: value })
 
       that.setState({ data: value, data_charts: [...that.state.data_charts, value] })
       var length = that.state.data_charts.length;
-      if (length >= 51) {
-        that.state.data_charts.unshift();
+      if (length >= 20) {
+        that.state.data_charts.shift();
       }
 
       var value_table = Object.assign({}, value);
@@ -70,15 +83,12 @@ class Crypto extends React.Component {
       value_table["time"] = date
       that.setState({ data_tables: [...that.state.data_tables, value_table] })
       var lengtht = that.state.data_tables.length;
-      console.log(lengtht);
-
-      if (lengtht >= 2) {
-        console.log("hello");
-
-        that.state.data_tables.unshift();
+      if (lengtht >= 20) {
+        that.state.data_tables.shift();
       }
     });
     socket.on('error', function (err) {
+      console.log("Error: " + err.message);
     });
     this.setState({ info: utils.getStationInfo(), isLoaded: true });
   }
@@ -92,7 +102,7 @@ class Crypto extends React.Component {
               <Statistics data={this.state.data} />
             </Col>
             <Col lg="4" md="2">
-              <StationInformation data={this.state.info} />
+              <StationInformation data={this.state.info} dataFault={this.state.dataFault} status={this.state.status} />
             </Col>
           </Row>
           <Row>

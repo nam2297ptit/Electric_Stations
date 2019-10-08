@@ -6,14 +6,8 @@ import {
   Card,
   CardBody,
   CardHeader,
-  CardTitle,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  UncontrolledDropdown
+  CardTitle
 } from "reactstrap";
-
-import { MoreHorizontal } from "react-feather";
 
 class Chart extends React.Component {
   constructor(props) {
@@ -25,12 +19,20 @@ class Chart extends React.Component {
 
     this.options = {
       stroke: {
-        width: 1
+        width: 3
+      },
+      yaxis: {
+        show: true,
       },
       xaxis: {
-        type: "datetime"
+        type: "datetime",
+        show: true,
+        labels: {
+          format: 'h:mm:ss'
+        },
+        tickAmount: 'dataPoints',
       },
-      colors: ["#0cc2aa", "#fcc100", "#f44455", "#f44455", "#5fc27e", "#5b7dff"]
+      colors: ["#0cc2aa", "#fcc100", "#f44455", "#BD10E0", "#5fc27e", "#5b7dff"]
     };
 
   }
@@ -42,8 +44,6 @@ class Chart extends React.Component {
 
   render() {
     const data = this.props.data;
-    console.log(data);
-
     const type = this.props.type;
     const UA = data.map(({ time, UA }, key) => {
       let x = time;
@@ -217,20 +217,47 @@ class Chart extends React.Component {
                               data: oil
                             }
                           ]
-                          :
-                          [
-                            {
-                              name: "Frequency",
-                              data: freq
-                            },
-                            {
-                              name: "Pgiao",
-                              data: Pgiao
-                            }
-                          ]
+                          : type === "frequency" ?
+                            [
+                              {
+                                name: "Frequency",
+                                data: freq
+                              },
+                              {
+                                name: "Pgiao",
+                                data: Pgiao
+                              }
+                            ]
+                            :
+                            [
+                              {
+                                name: "UA",
+                                data: UA
+                              },
+                              {
+                                name: "UB",
+                                data: UB
+                              },
+                              {
+                                name: "UC",
+                                data: UC
+                              },
+                              {
+                                name: "IA",
+                                data: IA
+                              },
+                              {
+                                name: "IB",
+                                data: IB
+                              },
+                              {
+                                name: "IC",
+                                data: IC
+                              }
+                            ]
               }
               type="line"
-              height="350"
+              height="400"
             />
           </div>
         </CardBody>
