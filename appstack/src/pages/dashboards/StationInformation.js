@@ -132,10 +132,10 @@ class StationInformation extends React.Component {
                   <li className="mb-2">
                     <h4>Current High: {" "}
                       <label>
-                        <Square className="feather-md mb-1" fill="orange" />{">="}<Link to="#">{0.3 * data.current_high.toFixed(0)} A</Link>
+                        <Square className="feather-md mb-1" fill="orange" />{">="}<Link to="#">{(0.3 * data.current_high).toFixed(0)} A</Link>
                       </label>
                       <label className="ml-4">
-                        <Square className="feather-md mb-1" fill="red" />{">="}<Link to="#">{0.7 * data.current_high.toFixed(0)} A</Link>
+                        <Square className="feather-md mb-1" fill="red" />{">="}<Link to="#">{(0.7 * data.current_high).toFixed(0)} A</Link>
                       </label>
                     </h4>
                   </li>
