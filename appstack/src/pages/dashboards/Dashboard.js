@@ -66,20 +66,20 @@ class Crypto extends React.Component {
     }
   }
   UNSAFE_componentWillMount() {
-    const that = this;
-    api.getData((err, result) => {
-      if (err) {
-        Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-      } else {
-        let element = [];
-        let data = [...result];
-        data.map((value, index) => {
-          value.time = moment(value.time).format('DD/MM/YYYY h:mm:ss')
-          element.push(value);
-        });
-        that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
-      }
-    })
+    // const that = this;
+    // api.getData((err, result) => {
+    //   if (err) {
+    //     Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
+    //   } else {
+    //     let element = [];
+    //     let data = [...result];
+    //     data.map((value, index) => {
+    //       value.time = moment(value.time).format('DD/MM/YYYY h:mm:ss')
+    //       element.push(value);
+    //     });
+    //     that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
+    //   }
+    // })
   }
 
   componentDidMount() {

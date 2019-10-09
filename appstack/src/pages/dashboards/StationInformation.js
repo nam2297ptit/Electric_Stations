@@ -39,7 +39,7 @@ class StationInformation extends React.Component {
       <React.Fragment>
         <Tabs defaultActiveKey="info"  >
           <Tab eventKey="info" title="Station information">
-            <Card className="flex-fill w-100" style={{ height: 270, width: "100%" }}>
+            <Card className="flex-fill w-100" style={{ height: 260, width: "100%" }}>
               <CardBody className="my-0">
                 <div className="d-flex justify-content-center">
                   <label >
@@ -74,32 +74,44 @@ class StationInformation extends React.Component {
                 </ul>
               </CardBody>
             </Card>
-            <Card className="flex-fill pt-2 pb-2" >
-              <CardBody className="d-flex justify-content-center">
-                <Media className="d-inline ml-1 mr-1" xs="4">
-                  <Square className="feather-md" fill={dataFault.fault.slice(0, 1) === "1" ? "red" : "#3fd932"} />
-                </Media>
-                <Media className="d-inline ml-1 mr-1" xs="4">
-                  <Square className="feather-md" fill={dataFault.fault.slice(1, 2) === "1" ? "red" : "#3fd932"} />
-                </Media>
-                <Media className="d-inline ml-1 mr-1" xs="4">
-                  <Square className="feather-md" fill={dataFault.fault.slice(2, 3) === "1" ? "red" : "#3fd932"} />
-                </Media>
-                <Media className="d-inline ml-1 mr-1" xs="4">
-                  <Square className="feather-md" fill={dataFault.fault.slice(3, 4) === "1" ? "red" : "#3fd932"} />
-                </Media>
-                <Media className="d-inline ml-1 mr-1" xs="4">
-                  <Square className="feather-md" fill={dataFault.fault.slice(4, 5) === "1" ? "red" : "#3fd932"} />
-                </Media>
-                <Media className="d-inline ml-1 mr-1" xs="4">
-                  <Square className="feather-md" fill={dataFault.fault.slice(5, 6) === "1" ? "red" : "#3fd932"} />
-                </Media>
-                <Media className="d-inline ml-1 mr-1" xs="4">
-                  <Square className="feather-md" fill={dataFault.fault.slice(6, 7) === "1" ? "red" : "#3fd932"} />
-                </Media>
-                <Media className="d-inline ml-1 mr-1" xs="4">
-                  <Square className="feather-md" fill={dataFault.fault.slice(7, 8) === "1" ? "red" : "#3fd932"} />
-                </Media>
+            <Card className="flex-fill py-0" >
+              <CardBody>
+                <Row>
+                  <Col>
+                    <Square className="feather-md" fill={dataFault.fault.slice(0, 1) === "1" ? "red" : "#3fd932"} />
+                    {" Mortor"}
+                  </Col>
+                  <Col>
+                    <Square className="feather-md" fill={dataFault.fault.slice(1, 2) === "1" ? "red" : "#3fd932"} />
+                    {" Oil Sensor"}
+                  </Col>
+                  <Col>
+                    <Square className="feather-md" fill={dataFault.fault.slice(2, 3) === "1" ? "red" : "#3fd932"} />
+                    {" DHT11"}
+                  </Col>
+                  <Col>
+                    <Square className="feather-md" fill={dataFault.fault.slice(3, 4) === "1" ? "red" : "#3fd932"} />
+                    {" Sim"}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Square className="feather-md" fill={dataFault.fault.slice(4, 5) === "1" ? "red" : "#3fd932"} />
+                    {" Contact 1"}
+                  </Col>
+                  <Col>
+                    <Square className="feather-md" fill={dataFault.fault.slice(5, 6) === "1" ? "red" : "#3fd932"} />
+                    {" Contact 2"}
+                  </Col>
+                  <Col>
+                    <Square className="feather-md" fill={dataFault.fault.slice(6, 7) === "1" ? "red" : "#3fd932"} />
+                    {" Memory"}
+                  </Col>
+                  <Col>
+                    <Square className="feather-md" fill={dataFault.fault.slice(7, 8) === "1" ? "red" : "#3fd932"} />
+                    {" IC"}
+                  </Col>
+                </Row>
               </CardBody>
             </Card>
           </Tab>
@@ -153,66 +165,7 @@ class StationInformation extends React.Component {
                       </label>
                     </h4>
                   </li>
-                  <li className="mb-2">
-                    <h4>
-                      <Row>
-                        <Col>
-                          <label>
-                            {"1. "} <Square className="feather mb-1" fill="red" />{"Mortor"}
-                          </label>
-                        </Col>
-                        <Col>
-                          <label>
-                            {"2. "} <Square className="feather mb-1" fill="red" />{"Oil Sensor"}
-                          </label>
-                        </Col>
-                        <Col>
-                          <label>
-                            {"3. "} <Square className="feather mb-1" fill="red" />{"DHT11"}
-                          </label>
-                        </Col>
-                      </Row>
-                    </h4>
-                  </li>
-                  <li className="mb-2">
-                    <h4>
-                      <Row>
-                        <Col>
-                          <label>
-                            {"4. "} <Square className="feather mb-1" fill="red" />{"Sim"}
-                          </label>
-                        </Col>
-                        <Col>
-                          <label>
-                            {"5. "} <Square className="feather mb-1" fill="red" />{"Contact 1"}
-                          </label>
-                        </Col>
-                        <Col>
-                          <label>
-                            {"6. "} <Square className="feather mb-1" fill="red" />{"Contact 2"}
-                          </label>
-                        </Col>
-                      </Row>
-                    </h4>
-                  </li>
-                  <li className="mb-2">
-                    <h4>
-                      <Row>
-                        <Col>
-                          <label>
-                            {"7. "} <Square className="feather mb-1" fill="red" />{"Memory"}
-                          </label>
-                        </Col>
-                        <Col>
-                          <label>
-                            {"8. "} <Square className="feather mb-1" fill="red" />{"IC"}
-                          </label>
-                        </Col>
-                        <Col>
-                        </Col>
-                      </Row>
-                    </h4>
-                  </li>
+
                 </ul>
               </CardBody>
             </Card>
