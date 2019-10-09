@@ -84,23 +84,7 @@ function getIdRole(callback) {
         });
 }
 
-// function getMemberSuggestions(listMap, callback) {
-//     const project = utils.getProjectId();
-//     const userToken = utils.getAuthToken();
-//     ModalAPI({
-//         url: api.config_api.user + "/" +  utils.getAuthId() + "/contacts?exclude_project=" + project,
-//         headers: {
-//             "Authorization": 'Bearer ' + userToken
-//         },
-//         body: null
-//     }, listMap, (err, result) => {
-//         if (err) {
-//             return callback(err);
-//         } else {
-//             return callback(null,result);
-//         }
-//     })
-// }
+
 
 function editIsAdmin(dataInput, callback) {
     axios({
@@ -130,30 +114,6 @@ function editIsAdmin(dataInput, callback) {
         });
 }
 
-// function createMember(listMap,dataInput,callback)  {
-//     const project = utils.getProjectId();
-//     const userToken = utils.getAuthToken();
-//     ModalAPI({
-//         url: api.config_api.memberships,
-//         method: 'POST',
-//         headers: {
-//             "Authorization": 'Bearer ' + userToken,
-//             "Content-Type": "application/json",
-//             "Accept":"application/json"
-//         },
-//         body: {
-//             "project" : project,
-//             "role": dataInput.role,
-//             "username": dataInput.username
-//         }
-//     }, listMap, (err, result) => {
-//         if (err) {
-//             return callback(err);
-//         } else {
-//             return callback(null,result);
-//         }
-//     })
-// }
 
 function deleteMembership(dataInput, callback) {
     console.log(config_api.admin + "/" + dataInput)
@@ -236,8 +196,6 @@ function deleteStation(id, callback) {
 }
 
 function modifyStation(id, data, callback) {
-    console.log(id);
-    console.log(data);
     axios({
         url: config_api.project + "/" + id,
         method: 'PATCH',
@@ -270,6 +228,4 @@ module.exports = {
     getInfoProject: getInfoProject,
     deleteStation: deleteStation,
     modifyStation: modifyStation
-    // getMemberSuggestions: getMemberSuggestions,
-    // createMember: createMember
 }

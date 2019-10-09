@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { NavLink, withRouter } from "react-router-dom";
 
-import { Badge, Collapse } from "reactstrap";
+import { Badge } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
 import { Box } from "react-feather";
@@ -10,11 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 import routes from "../routes/index";
-import {CustomImg} from "../components/CustomTag";
+import { CustomImg } from "../components/CustomTag";
 import { Settings, Users, TrendingUp } from "react-feather";
-
-
-
 
 const SidebarItem = withRouter(
   ({ name, badgeColor, badgeText, icon: Icon, location, to }) => {
@@ -67,84 +64,83 @@ class Sidebar extends React.Component {
 
   render() {
     const { sidebar, layout } = this.props;
-    
+
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    const project = JSON.parse(localStorage.getItem('project'));
     const name = userInfo.full_name;
     const avatar = userInfo.photo;
     const isAdmin = userInfo.is_admin
     console.log(isAdmin);
-    
-    if(name===undefined || avatar===undefined){
-      return(
-          <div> </div>
+
+    if (name === undefined || avatar === undefined) {
+      return (
+        <div> </div>
       );
     } else
-    return (
-      <nav
-        className={
-          "sidebar" +
-          (!sidebar.isOpen ? " toggled" : "") +
-          (sidebar.isSticky ? " sidebar-sticky" : "")
-        }
-      >
-        <div className="sidebar-content">
-          <PerfectScrollbar>
-            <a className="sidebar-brand" href="/">
-              <Box className="align-middle text-primary mr-2" size={24} />{" "}
-              <span className="align-middle">Electronic station</span>
-            </a>
+      return (
+        <nav
+          className={
+            "sidebar" +
+            (!sidebar.isOpen ? " toggled" : "") +
+            (sidebar.isSticky ? " sidebar-sticky" : "")
+          }
+        >
+          <div className="sidebar-content">
+            <PerfectScrollbar>
+              <a className="sidebar-brand" href="/">
+                <Box className="align-middle text-primary mr-2" size={24} />{" "}
+                <span className="align-middle">Electronic station</span>
+              </a>
 
-            <ul className="sidebar-nav">
-                  <React.Fragment>
+              <ul className="sidebar-nav">
+                <React.Fragment>
+                  <SidebarItem
+                    name="Dashboard"
+                    to="/dashboard"
+                    icon={TrendingUp}
+                  />
+                  <SidebarItem
+                    name="Profile"
+                    to="/profile"
+                    icon={Users}
+                  />
+                  {isAdmin ?
                     <SidebarItem
-                      name="Dashboard"
-                      to="/dashboard"
-                      icon={TrendingUp}
+                      name="Admin"
+                      icon={Settings}
+                      to="/stations/admin"
                     />
-                    <SidebarItem
-                      name="Profile"
-                      to="/profile"
-                      icon={Users}
-                    />
-                  {isAdmin ? 
-                    <SidebarItem
-                        name="Admin"
-                        icon={Settings}
-                        to="/stations/admin"
-                    />
-                   : null
-                   }
-                   </React.Fragment>
-            </ul>
+                    : null
+                  }
+                </React.Fragment>
+              </ul>
 
-            {!layout.isBoxed && !sidebar.isSticky ? (
+              {!layout.isBoxed && !sidebar.isSticky ? (
                 <div className="sidebar-bottom d-none d-lg-block">
-                    <div className="media">
-                        <CustomImg
-                            className="rounded-circle mr-3"
-                            src={avatar}
-                            alt="Avatar"
-                            width="40"
-                            height="40"
-                        />
-                        <div className="media-body">
-                            <h5 className="mb-1">{name.length<20 ? name : name.substring(0, 20)}</h5>
-                            <div>
-                                <FontAwesomeIcon
-                                    icon={faCircle}
-                                    className="text-success"
-                                />{" "}
-                                Online
+                  <div className="media">
+                    <CustomImg
+                      className="rounded-circle mr-3"
+                      src={avatar}
+                      alt="Avatar"
+                      width="40"
+                      height="40"
+                    />
+                    <div className="media-body">
+                      <h5 className="mb-1">{name.length < 20 ? name : name.substring(0, 20)}</h5>
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faCircle}
+                          className="text-success"
+                        />{" "}
+                        Online
                             </div>
-                        </div>
                     </div>
+                  </div>
                 </div>
-            ) : null}
-          </PerfectScrollbar>
-        </div>
-      </nav>
-    );
+              ) : null}
+            </PerfectScrollbar>
+          </div>
+        </nav>
+      );
   }
 }
 

@@ -3,20 +3,99 @@ import React from "react";
 import ApexCharts from "react-apexcharts";
 
 import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardTitle
+  Card, CardBody, CardHeader, CardTitle,
+  DropdownMenu, DropdownToggle, DropdownItem, UncontrolledDropdown, Input,
+  Row, Col
 } from "reactstrap";
+import { formatDate, parseDate } from 'react-day-picker/moment';
+import moment from 'moment'
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+class DateTimePicker extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleFromChange = this.handleFromChange.bind(this);
+    this.handleToChange = this.handleToChange.bind(this);
+    this.state = {
+      from: new Date(moment().startOf('year').format('L')),
+      to: new Date(moment().endOf('year').format('L')),
+    };
+  }
 
+  handleFromChange(from) {
+    this.setState({ from });
+  }
+  handleToChange(to) {
+    this.setState({ to }, this.showFromMonth);
+    if (this.state.from !== "") {
+      this.props.handerSetDueDateKPI(this.state.from, to);
+    }
+  }
+  render() {
+    const { from, to } = this.state;
+    const modifiers = { start: from, end: to };
+    return (
+      <div className="InputFromTo" >
+        <UncontrolledDropdown >
+          <DropdownToggle caret color="light">
+            Phase: {moment(from).format('L')} - {moment(to).format('L')} {' '}
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem header>
+              Start time: {' '}
+              <DayPickerInput
+                inputProps={{ style: { width: 100 } }}
+                value={from}
+                placeholder="From"
+                formatDate={formatDate}
+                parseDate={parseDate}
+                dayPickerProps={{
+                  selectedDays: [from, { from, to }],
+                  disabledDays: { after: to },
+                  toMonth: to,
+                  modifiers,
+                  numberOfMonths: 1,
+                  onDayClick: () => this.to.getInput().focus(),
+                }}
+                onDayChange={this.handleFromChange}
+              />
+            </DropdownItem>
+            <DropdownItem header>
+              End Time: {' '}
+              <DayPickerInput
+                ref={el => (this.to = el)}
+                inputProps={{ style: { width: 100 } }}
+                value={to}
+                placeholder="To"
+                formatDate={formatDate}
+                parseDate={parseDate}
+                dayPickerProps={{
+                  selectedDays: [from, { from, to }],
+                  disabledDays: { before: from },
+                  modifiers,
+                  month: from,
+                  fromMonth: from,
+                  numberOfMonths: 1,
+                }}
+                onDayChange={this.handleToChange}
+              />
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </div>
+    );
+  }
+}
 class Chart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoaded: false,
-      data: []
+      data: [],
+      socket: true,
+      type: "realtime",
     };
-
+    this.handerSetDueDateKPI = this.handerSetDueDateKPI.bind(this);
+    this.handleChangeType = this.handleChangeType.bind(this);
     this.options = {
       stroke: {
         width: 3
@@ -34,14 +113,26 @@ class Chart extends React.Component {
       },
       colors: ["#0cc2aa", "#fcc100", "#f44455", "#BD10E0", "#5fc27e", "#5b7dff"]
     };
-
   }
 
   componentDidMount() {
     // Trigger resize manually so chart doesn't fall off canvas
     window.dispatchEvent(new Event("resize"));
   }
-
+  handerSetDueDateKPI(from, to) {
+    this.props.handleSearch(from, to);
+  }
+  handleChangeType(event) {
+    this.setState({
+      type: event.target.value
+    })
+    if (event.target.value === "report") {
+      this.props.handleChangeSocket(false);
+    }
+    else {
+      this.props.handleChangeSocket(true);
+    }
+  }
   render() {
     const data = this.props.data;
     const type = this.props.type;
@@ -135,8 +226,29 @@ class Chart extends React.Component {
     return (
       <Card className="flex-fill">
         <CardHeader>
-          <CardTitle tag="h5" className="mb-0">Evaluation Chart</CardTitle>
-        </CardHeader>
+          <Row>
+            {
+              this.state.type === "realtime"
+                ?
+                <Col>
+                  <CardTitle tag="h5" className="mb-0 mt-2 ml-1">Evaluation Chart</CardTitle>
+                </Col>
+                :
+                <Col>
+                  <DateTimePicker className=" d-inline" handerSetDueDateKPI={this.handerSetDueDateKPI} />
+                </Col>
+
+            }
+            <Col xs="3">
+              <Input type="select" value={this.state.type} onChange={this.handleChangeType} >
+                <option value="realtime">RealTime</option>
+                <option value="report">Report</option>
+              </Input>
+            </Col>
+          </Row>
+
+
+        </CardHeader >
         <CardBody>
           <div className="chart">
             <ApexCharts
@@ -261,7 +373,7 @@ class Chart extends React.Component {
             />
           </div>
         </CardBody>
-      </Card>
+      </Card >
     );
   }
 }

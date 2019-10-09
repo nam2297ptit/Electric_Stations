@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Card, CardBody,
   Media,
-  Col, Row
+  Col, Row,
 } from "reactstrap";
 import {
   Tabs, Tab
@@ -12,6 +12,7 @@ import {
   Briefcase, Home, MapPin, Square, User, Paperclip, Phone
 } from "react-feather";
 import Map from "./Map";
+
 class StationInformation extends React.Component {
   constructor(props) {
     super(props);
@@ -30,6 +31,7 @@ class StationInformation extends React.Component {
       });
     }
   }
+
   render() {
     const { data } = this.state;
     const { dataFault } = this.props;

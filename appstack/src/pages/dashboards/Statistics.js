@@ -11,7 +11,7 @@ function convertToClassName(data, ID) {
   if (data <= volt_low && ID === "UA") {
     return "U_red";
   }
-  else if (data >= volt_high && ID === "UB") {
+  else if (data >= volt_high && ID === "UA") {
     return "U_red";
   }
   else if (data <= volt_low && ID === "UB") {

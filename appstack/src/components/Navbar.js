@@ -1,17 +1,14 @@
 import React from "react";
-import {connect} from "react-redux";
-import {toggleSidebar} from "../redux/actions/sidebarActions";
-import {Link} from "react-router-dom";
+import { connect } from "react-redux";
+import { toggleSidebar } from "../redux/actions/sidebarActions";
+import { Link } from "react-router-dom";
 import $ from "jquery";
 
 import {
-    Row,
-    Col, Collapse,
+    Collapse,
     Navbar, Nav,
     UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem,
-    ListGroup, ListGroupItem,
-    Form,
-    Input,
+    ListGroup,
     UncontrolledTooltip,
 } from "reactstrap";
 
@@ -21,10 +18,9 @@ import {
     PieChart,
     Settings,
     User,
-    Layout,
-    Globe
+    Layout
 } from "react-feather";
-import {CustomImg} from "../components/CustomTag";
+import { CustomImg } from "../components/CustomTag";
 
 import usFlag from "../assets/img/flags/us.png";
 import vnFlag from "../assets/img/flags/vn.png";
@@ -35,9 +31,9 @@ import "./Navbar.css"
 
 
 class NavbarDropdown extends React.Component {
-    
+
     render() {
-        const {children, count, showBadge, header, icon} = this.props;
+        const { children, count, showBadge, header, icon } = this.props;
         return (
             <UncontrolledDropdown nav inNavbar className="mr-2">
                 <DropdownToggle nav className="nav-icon dropdown-toggle">
@@ -75,15 +71,15 @@ class NavbarComponent extends React.Component {
     }
 
     render() {
-        const {dispatch} = this.props;
+        const { dispatch } = this.props;
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
         const avatar = userInfo.photo;
         const name = userInfo.full_name;
         return (
             <Navbar color="white" light expand>
                 {
-                    <span className="sidebar-toggle d-flex mr-2" onClick={() => { dispatch(toggleSidebar());}}>
-                        <i className="hamburger align-self-center"/>
+                    <span className="sidebar-toggle d-flex mr-2" onClick={() => { dispatch(toggleSidebar()); }}>
+                        <i className="hamburger align-self-center" />
                     </span>
                 }
 
@@ -91,15 +87,15 @@ class NavbarComponent extends React.Component {
                     <Nav className="ml-auto" navbar>
                         <UncontrolledDropdown nav inNavbar className="mr-2">
                             <DropdownToggle nav>
-                                <Home id="navbar-dashboard" size={18} onClick={this.replacePage.bind(this,"/dashboard")}/> 
+                                <Home id="navbar-dashboard" size={18} onClick={this.replacePage.bind(this, "/dashboard")} />
                                 <UncontrolledTooltip placement="bottom" target="navbar-dashboard">
                                     Dashboard
-                                </UncontrolledTooltip>        
-                            </DropdownToggle>                            
+                                </UncontrolledTooltip>
+                            </DropdownToggle>
                         </UncontrolledDropdown>
                         <UncontrolledDropdown nav inNavbar className="mr-2">
                             <DropdownToggle nav>
-                                <Layout id="navbar-project" size={18} onClick={this.replacePage.bind(this,"/stations")}/>
+                                <Layout id="navbar-project" size={18} onClick={this.replacePage.bind(this, "/stations")} />
                                 <UncontrolledTooltip placement="bottom" target="navbar-project">
                                     Stations
                                 </UncontrolledTooltip>
@@ -108,7 +104,7 @@ class NavbarComponent extends React.Component {
 
                         <NavbarDropdown
                             header="New Notifications"
-                            // count={this.props.notification.length}
+                        // count={this.props.notification.length}
                         >
                             {/* {
                                 this.props.notification.map(({event_type, data, created}, key) => {
@@ -124,13 +120,13 @@ class NavbarComponent extends React.Component {
                                     />
                                 );
                             })} */}
-                        </NavbarDropdown> 
+                        </NavbarDropdown>
 
 
                         <UncontrolledDropdown nav inNavbar>
                             <span className="d-inline-block d-sm-none">
                                 <DropdownToggle nav caret>
-                                    <Settings size={18} className="align-middle"/>
+                                    <Settings size={18} className="align-middle" />
                                 </DropdownToggle>
                             </span>
                             <span className="d-none d-sm-inline-block">
@@ -144,22 +140,22 @@ class NavbarComponent extends React.Component {
                                 </DropdownToggle>
                             </span>
                             <DropdownMenu right>
-                                <Link to="/profile"className="text-dark">
+                                <Link to="/profile" className="text-dark">
                                     <DropdownItem>
-                                        <User size={18} className="align-middle mr-2"/>
+                                        <User size={18} className="align-middle mr-2" />
                                         Profile
                                     </DropdownItem>
                                 </Link>
                                 <Link to="">
                                     <DropdownItem>
-                                        <PieChart size={18} className="align-middle mr-2"/>
+                                        <PieChart size={18} className="align-middle mr-2" />
                                         Analytics
                                     </DropdownItem>
                                 </Link>
-                                <DropdownItem divider/>
+                                <DropdownItem divider />
                                 <Link to="">
                                     <DropdownItem>Settings & Privacy</DropdownItem>
-                                </Link>                                
+                                </Link>
                                 <Link to="">
                                     <DropdownItem>Help</DropdownItem>
                                 </Link>
