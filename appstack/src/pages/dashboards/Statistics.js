@@ -266,7 +266,7 @@ class Statistics extends React.Component {
                     </h3>
                   </div>
                   <Media body>
-                    <h3 className={"mb-1 text-center "}>{data.cosA}</h3>
+                    <h3 className={"mb-1 text-center "}>{data.CosA}</h3>
                   </Media>
                 </Media>
                 <Media>
@@ -277,7 +277,7 @@ class Statistics extends React.Component {
                     </h3>
                   </div>
                   <Media body>
-                    <h3 className={"mb-1 text-center "}>{data.cosB}</h3>
+                    <h3 className={"mb-1 text-center "}>{data.CosB}</h3>
                   </Media>
                 </Media>
                 <Media>
@@ -288,7 +288,7 @@ class Statistics extends React.Component {
                     </h3>
                   </div>
                   <Media body>
-                    <h3 className={"mb-1 text-center "}>{data.cosC}</h3>
+                    <h3 className={"mb-1 text-center "}>{data.CosC}</h3>
                   </Media>
                 </Media>
               </CardBody>
@@ -305,7 +305,7 @@ class Statistics extends React.Component {
                       </div>
                       <Media body>
                         <Media body>
-                          <h3>{data.hum} %</h3>
+                          <h3>{data.Hum} %</h3>
                           <h6 className="mt-1">Humidity</h6>
                         </Media>
                       </Media>
@@ -319,7 +319,7 @@ class Statistics extends React.Component {
                     <Media>
                       <Thermometer className="feather-lg" color="lightblue" />
                       <Media body>
-                        <h3 className={convertToClassName(data.temp, "temp")}>{data.temp} °C</h3>
+                        <h3 className={convertToClassName(data.Temp, "temp")}>{data.Temp} °C</h3>
                         <h6 className="mt-1">Temperature</h6>
                       </Media>
                     </Media>
@@ -334,7 +334,7 @@ class Statistics extends React.Component {
                         <Thermometer className="feather-lg" color="lightblue" />
                       </div>
                       <Media body>
-                        <h3 className={convertToClassName(data.oil, "oil")}>{data.oil} °C</h3>
+                        <h3 className={convertToClassName(data.Oil, "oil")}>{data.Oil} °C</h3>
                         <h6 className="mt-1">Oil Temperature</h6>
                       </Media>
                     </Media>
@@ -351,7 +351,7 @@ class Statistics extends React.Component {
                         <Activity className="feather-lg" color="lightblue" />
                       </div>
                       <Media body>
-                        <h3>{data.freq} Hz</h3>
+                        <h3>{data.Freq} Hz</h3>
                         <h6 className="mt-1">Frequency</h6>
                       </Media>
                     </Media>

@@ -78,37 +78,37 @@ class StationInformation extends React.Component {
               <CardBody>
                 <Row>
                   <Col>
-                    <Square className="feather-md" fill={dataFault.fault.slice(0, 1) === "1" ? "red" : "#3fd932"} />
+                    <Square className="feather-md" fill={dataFault.Fault.slice(0, 1) === "1" ? "red" : "#3fd932"} />
                     {" Mortor"}
                   </Col>
                   <Col>
-                    <Square className="feather-md" fill={dataFault.fault.slice(1, 2) === "1" ? "red" : "#3fd932"} />
+                    <Square className="feather-md" fill={dataFault.Fault.slice(1, 2) === "1" ? "red" : "#3fd932"} />
                     {" Oil Sensor"}
                   </Col>
                   <Col>
-                    <Square className="feather-md" fill={dataFault.fault.slice(2, 3) === "1" ? "red" : "#3fd932"} />
+                    <Square className="feather-md" fill={dataFault.Fault.slice(2, 3) === "1" ? "red" : "#3fd932"} />
                     {" DHT11"}
                   </Col>
                   <Col>
-                    <Square className="feather-md" fill={dataFault.fault.slice(3, 4) === "1" ? "red" : "#3fd932"} />
+                    <Square className="feather-md" fill={dataFault.Fault.slice(3, 4) === "1" ? "red" : "#3fd932"} />
                     {" Sim"}
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <Square className="feather-md" fill={dataFault.fault.slice(4, 5) === "1" ? "red" : "#3fd932"} />
+                    <Square className="feather-md" fill={dataFault.Fault.slice(4, 5) === "1" ? "red" : "#3fd932"} />
                     {" Contact 1"}
                   </Col>
                   <Col>
-                    <Square className="feather-md" fill={dataFault.fault.slice(5, 6) === "1" ? "red" : "#3fd932"} />
+                    <Square className="feather-md" fill={dataFault.Fault.slice(5, 6) === "1" ? "red" : "#3fd932"} />
                     {" Contact 2"}
                   </Col>
                   <Col>
-                    <Square className="feather-md" fill={dataFault.fault.slice(6, 7) === "1" ? "red" : "#3fd932"} />
+                    <Square className="feather-md" fill={dataFault.Fault.slice(6, 7) === "1" ? "red" : "#3fd932"} />
                     {" Memory"}
                   </Col>
                   <Col>
-                    <Square className="feather-md" fill={dataFault.fault.slice(7, 8) === "1" ? "red" : "#3fd932"} />
+                    <Square className="feather-md" fill={dataFault.Fault.slice(7, 8) === "1" ? "red" : "#3fd932"} />
                     {" IC"}
                   </Col>
                 </Row>

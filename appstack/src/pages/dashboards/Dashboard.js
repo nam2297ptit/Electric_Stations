@@ -10,7 +10,6 @@ import Notification from "../../components/Notification";
 const config_socket = require("../../config/config").config_socket;
 const utils = require("../../utils/utils");
 const api = require("./api/api");
-const notifier = require('node-notifier');
 class Crypto extends React.Component {
   constructor(props) {
     super(props);
@@ -133,8 +132,6 @@ class Crypto extends React.Component {
   }
 
   render() {
-    console.log(this.state.socket);
-
     return (
       !this.state.isLoaded ? <p className="text-center">Loading...</p> :
         <Container fluid className="p-0">

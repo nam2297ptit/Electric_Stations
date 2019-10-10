@@ -150,12 +150,12 @@ const All = [
     sort: true
   },
   {
-    dataField: "hum",
+    dataField: "Hum",
     text: "Humidity",
     sort: true
   },
   {
-    dataField: "temp",
+    dataField: "Temp",
     text: "Temperature",
     sort: true,
     style: function callback(cell) {
@@ -172,7 +172,7 @@ const All = [
     },
   },
   {
-    dataField: "oil",
+    dataField: "Oil",
     text: "Oil Temperature",
     sort: true,
     style: function callback(cell) {
@@ -189,7 +189,7 @@ const All = [
     },
   },
   {
-    dataField: "freq",
+    dataField: "Freq",
     text: "Frequency",
     sort: true
   },
@@ -199,7 +199,7 @@ const All = [
     sort: true
   },
   {
-    dataField: "fault",
+    dataField: "Fault",
     text: "Fault",
     sort: true
   },
@@ -358,12 +358,12 @@ const SensorsColumns = [
     sort: true
   },
   {
-    dataField: "hum",
+    dataField: "Hum",
     text: "Humidity",
     sort: true
   },
   {
-    dataField: "temp",
+    dataField: "Temp",
     text: "Temperature",
     sort: true,
     style: function callback(cell) {
@@ -380,7 +380,7 @@ const SensorsColumns = [
     },
   },
   {
-    dataField: "oil",
+    dataField: "Oil",
     text: "Oil Temperature",
     sort: true,
     style: function callback(cell) {
@@ -405,7 +405,7 @@ const FrequencyColumns = [
     sort: true
   },
   {
-    dataField: "freq",
+    dataField: "Freq",
     text: "Frequency",
     sort: true
   },
