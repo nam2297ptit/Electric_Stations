@@ -18,7 +18,7 @@ class Crypto extends React.Component {
       data_tables: [],
       data_charts: [],
       dataFault: {
-        fault: "00000000"
+        Fault: "00000000"
       },
       status: true,
       info: [],
