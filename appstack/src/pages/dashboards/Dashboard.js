@@ -80,7 +80,7 @@ class Crypto extends React.Component {
           element.push(value);
         });
         if (data.length !== 0)
-          that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
+          that.setState({ data_tables: element, data: result[result.length - 1], data_charts: result, isLoaderAPI: true });
       }
 
     })

@@ -88,7 +88,7 @@ class Statistics extends React.Component {
             <Card className="flex-fill">
               <CardHeader>
                 <span className="badge badge-primary float-right">V</span>
-                <h5 className="card-title mb-0">Volt</h5>
+                <h5 className="card-title mb-0">Voltage</h5>
               </CardHeader>
               <CardBody>
                 <Media>
@@ -131,7 +131,7 @@ class Statistics extends React.Component {
             <Card className="flex-fill">
               <CardHeader>
                 <span className="badge badge-warning float-right">A</span>
-                <h5 className="card-title mb-0">Ample</h5>
+                <h5 className="card-title mb-0">Current</h5>
               </CardHeader>
               <CardBody>
                 <Media>
@@ -173,7 +173,7 @@ class Statistics extends React.Component {
           <Col sm="3">
             <Card className="flex-fill">
               <CardHeader>
-                <span className="badge badge-info float-right">W</span>
+                <span className="badge badge-info float-right">kW</span>
                 <h5 className="card-title mb-0">Wattage</h5>
               </CardHeader>
               <CardBody>
@@ -216,7 +216,7 @@ class Statistics extends React.Component {
           <Col sm="3">
             <Card className="flex-fill">
               <CardHeader>
-                <span className="badge badge-success float-right">VAR</span>
+                <span className="badge badge-success float-right">kVA</span>
                 <h5 className="card-title mb-0">Reactive power</h5>
               </CardHeader>
               <CardBody>
@@ -262,7 +262,7 @@ class Statistics extends React.Component {
             <Card className="flex-fill">
               <CardHeader>
                 <span className="badge badge-info float-right">Radius</span>
-                <h5 className="card-title mb-0">Cos</h5>
+                <h5 className="card-title mb-0">Cos φ</h5>
               </CardHeader>
               <CardBody>
                 <Media>
@@ -373,7 +373,7 @@ class Statistics extends React.Component {
                         <Cpu className="feather-lg" color="lightblue" />
                       </div>
                       <Media body>
-                        <h3>{data.Pgiao} kW</h3>
+                        <h3>{data.Pgiao} kWh</h3>
                         <h6 className="mt-1">Energy Consumption</h6>
                       </Media>
                     </Media>
