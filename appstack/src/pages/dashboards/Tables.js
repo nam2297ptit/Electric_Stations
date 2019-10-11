@@ -204,7 +204,23 @@ const All = [
     sort: true
   },
 ];
-
+const CosColumns = [
+  {
+    dataField: "CosA",
+    text: "CosA",
+    sort: true
+  },
+  {
+    dataField: "CosB",
+    text: "CosB",
+    sort: true
+  },
+  {
+    dataField: "CosC",
+    text: "CosC",
+    sort: true
+  }
+];
 const VoltColumns = [
   {
     dataField: "time",
@@ -473,8 +489,9 @@ class Tables extends React.Component {
                 this.state.type === "ample" ? AmpleColumns :
                   this.state.type === "wattage" ? WattageColumns :
                     this.state.type === "reactive" ? ReactiveColumns :
-                      this.state.type === "frequency" ? FrequencyColumns :
-                        SensorsColumns
+                      this.state.type === "cos" ? CosColumns :
+                        this.state.type === "frequency" ? FrequencyColumns :
+                          SensorsColumns
           }
           exportCSV
         >
@@ -494,6 +511,7 @@ class Tables extends React.Component {
                         <option value="ample">Ample</option>
                         <option value="wattage">Wattage</option>
                         <option value="reactive">Reactive Power</option>
+                        <option value="cos">Cos φ</option>
                         <option value="frequency">Frequency & Pgiao</option>
                         <option value="sensors">Sensors</option>
                       </Input>

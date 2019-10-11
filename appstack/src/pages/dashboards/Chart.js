@@ -113,7 +113,7 @@ class Chart extends React.Component {
         },
         tickAmount: 'dataPoints',
       },
-      colors: ["#0cc2aa", "#fcc100", "#f44455", "#BD10E0", "#5fc27e", "#5b7dff", "#c6eb34", "#34ebb7", "#34ebb7", "#36403d", "#f3ff05", "#8e9be8", "#aaabb3", "#f08f07", "#f0ece6"]
+      colors: ["#0cc2aa", "#fcc100", "#f44455", "#BD10E0", "#5fc27e", "#5b7dff", "#c6eb34", "#34ebb7", "#34ebb7", "#36403d", "#f3ff05", "#8e9be8", "#aaabb3", "#66ff66", "#f0ece6"]
     };
   }
 
@@ -201,17 +201,17 @@ class Chart extends React.Component {
     })
     const cosA = data.map(({ time, CosA }, key) => {
       let x = time;
-      let y = CosA;
+      let y = CosA * 100;
       return { x, y }
     })
     const cosB = data.map(({ time, CosB }, key) => {
       let x = time;
-      let y = CosB;
+      let y = CosB * 100;
       return { x, y }
     })
     const cosC = data.map(({ time, CosC }, key) => {
       let x = time;
-      let y = CosC;
+      let y = CosC * 100;
       return { x, y }
     })
     const hum = data.map(({ time, Humi }, key) => {
@@ -357,77 +357,92 @@ class Chart extends React.Component {
                                 data: Pgiao
                               }
                             ]
-                            :
-                            [
-                              {
-                                name: "UA",
-                                data: UA
-                              },
-                              {
-                                name: "UB",
-                                data: UB
-                              },
-                              {
-                                name: "UC",
-                                data: UC
-                              },
-                              {
-                                name: "IA",
-                                data: IA
-                              },
-                              {
-                                name: "IB",
-                                data: IB
-                              },
-                              {
-                                name: "IC",
-                                data: IC
-                              },
-                              {
-                                name: "PA",
-                                data: PA
-                              },
-                              {
-                                name: "PB",
-                                data: PB
-                              },
-                              {
-                                name: "PC",
-                                data: PC
-                              },
-                              {
-                                name: "QA",
-                                data: QA
-                              },
-                              {
-                                name: "QB",
-                                data: QB
-                              },
-                              {
-                                name: "QC",
-                                data: QC
-                              },
-                              {
-                                name: "CosA",
-                                data: cosA
-                              },
-                              {
-                                name: "CosB",
-                                data: cosB
-                              },
-                              {
-                                name: "CosC",
-                                data: cosC
-                              },
-                              {
-                                name: "Temp",
-                                data: temp
-                              },
-                              {
-                                name: "Oil",
-                                data: oil
-                              },
-                            ]
+                            : type === "cos" ?
+                              [
+                                {
+                                  name: "CosA",
+                                  data: cosA
+                                },
+                                {
+                                  name: "CosB",
+                                  data: cosB
+                                },
+                                {
+                                  name: "CosC",
+                                  data: cosC
+                                }
+                              ]
+                              :
+                              [
+                                {
+                                  name: "UA",
+                                  data: UA
+                                },
+                                {
+                                  name: "UB",
+                                  data: UB
+                                },
+                                {
+                                  name: "UC",
+                                  data: UC
+                                },
+                                {
+                                  name: "IA",
+                                  data: IA
+                                },
+                                {
+                                  name: "IB",
+                                  data: IB
+                                },
+                                {
+                                  name: "IC",
+                                  data: IC
+                                },
+                                {
+                                  name: "PA",
+                                  data: PA
+                                },
+                                {
+                                  name: "PB",
+                                  data: PB
+                                },
+                                {
+                                  name: "PC",
+                                  data: PC
+                                },
+                                {
+                                  name: "QA",
+                                  data: QA
+                                },
+                                {
+                                  name: "QB",
+                                  data: QB
+                                },
+                                {
+                                  name: "QC",
+                                  data: QC
+                                },
+                                {
+                                  name: "CosA",
+                                  data: cosA
+                                },
+                                {
+                                  name: "CosB",
+                                  data: cosB
+                                },
+                                {
+                                  name: "CosC",
+                                  data: cosC
+                                },
+                                {
+                                  name: "Temp",
+                                  data: temp
+                                },
+                                {
+                                  name: "Oil",
+                                  data: oil
+                                },
+                              ]
               }
               type="line"
               height="400"
