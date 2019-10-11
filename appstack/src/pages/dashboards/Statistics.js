@@ -388,7 +388,7 @@ class Statistics extends React.Component {
                         <Clock className="feather-lg" color="lightblue" />
                       </div>
                       <Media body>
-                        <h4><strong>{moment(data.time).format('h:mm:ss a')}</strong></h4>
+                        <h5><strong>{moment(data.time).format('DD/MM/YYYY h:mm:ss')}</strong></h5>
                         <h6 className="mt-2">Time Update</h6>
                       </Media>
                     </Media>
