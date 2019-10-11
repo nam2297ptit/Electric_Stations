@@ -312,7 +312,7 @@ class Statistics extends React.Component {
                       </div>
                       <Media body>
                         <Media body>
-                          <h3>{data.Hum} %</h3>
+                          <h3>{data.Humi} %</h3>
                           <h6 className="mt-1">Humidity</h6>
                         </Media>
                       </Media>

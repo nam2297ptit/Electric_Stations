@@ -100,14 +100,11 @@ class Chart extends React.Component {
       stroke: {
         width: 3
       },
-      yaxis: {
-        show: true,
-      },
       xaxis: {
         type: "datetime",
         show: true,
         labels: {
-          format: 'h:mm:ss'
+          format: 'DD/MM/YYYY h:mm:ss'
         },
         tickAmount: 'dataPoints',
       },
@@ -197,39 +194,39 @@ class Chart extends React.Component {
       let y = QC;
       return { x, y }
     })
-    const cosA = data.map(({ time, QA }, key) => {
+    const cosA = data.map(({ time, CosA }, key) => {
       let x = time;
-      let y = cosA;
+      let y = CosA;
       return { x, y }
     })
-    const cosB = data.map(({ time, QB }, key) => {
+    const cosB = data.map(({ time, CosB }, key) => {
       let x = time;
-      let y = cosB;
+      let y = CosB;
       return { x, y }
     })
-    const cosC = data.map(({ time, QC }, key) => {
+    const cosC = data.map(({ time, CosC }, key) => {
       let x = time;
-      let y = cosC;
+      let y = CosC;
       return { x, y }
     })
-    const hum = data.map(({ time, hum }, key) => {
+    const hum = data.map(({ time, Humi }, key) => {
       let x = time;
-      let y = hum;
+      let y = Humi;
       return { x, y }
     })
-    const temp = data.map(({ time, temp }, key) => {
+    const temp = data.map(({ time, Temp }, key) => {
       let x = time;
-      let y = temp;
+      let y = Temp;
       return { x, y }
     })
-    const oil = data.map(({ time, oil }, key) => {
+    const oil = data.map(({ time, Oil }, key) => {
       let x = time;
-      let y = oil;
+      let y = Oil;
       return { x, y }
     })
-    const freq = data.map(({ time, freq }, key) => {
+    const freq = data.map(({ time, Freq }, key) => {
       let x = time;
-      let y = freq;
+      let y = Freq;
       return { x, y }
     })
     const Pgiao = data.map(({ time, Pgiao }, key) => {
@@ -416,7 +413,15 @@ class Chart extends React.Component {
                               {
                                 name: "CosC",
                                 data: cosC
-                              }
+                              },
+                              {
+                                name: "Temp",
+                                data: temp
+                              },
+                              {
+                                name: "Oil",
+                                data: oil
+                              },
                             ]
               }
               type="line"

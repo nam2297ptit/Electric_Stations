@@ -135,22 +135,22 @@ const All = [
     sort: true
   },
   {
-    dataField: "cosA",
+    dataField: "CosA",
     text: "CosA",
     sort: true
   },
   {
-    dataField: "cosB",
+    dataField: "CosB",
     text: "CosB",
     sort: true
   },
   {
-    dataField: "cosC",
+    dataField: "CosC",
     text: "CosC",
     sort: true
   },
   {
-    dataField: "Hum",
+    dataField: "Humi",
     text: "Humidity",
     sort: true
   },
@@ -358,7 +358,7 @@ const SensorsColumns = [
     sort: true
   },
   {
-    dataField: "Hum",
+    dataField: "Humi",
     text: "Humidity",
     sort: true
   },
