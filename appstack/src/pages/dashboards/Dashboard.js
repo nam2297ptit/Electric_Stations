@@ -74,7 +74,8 @@ class Crypto extends React.Component {
         console.log(result);
         let element = [];
         let data = [...result];
-        data.map((value, index) => {
+        data.map((values, index) => {
+          let value = { ...values }
           value.time = moment(value.time).format('DD/MM/YYYY h:mm:ss')
           element.push(value);
         });
