@@ -367,7 +367,7 @@ class Statistics extends React.Component {
                       </div>
                       <Media body>
                         <h3>{data.Pgiao} kW</h3>
-                        <h6 className="mt-1">Pgiao</h6>
+                        <h6 className="mt-1">Energy Consumption</h6>
                       </Media>
                     </Media>
                   </CardBody>
