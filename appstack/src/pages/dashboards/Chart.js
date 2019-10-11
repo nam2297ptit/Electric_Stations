@@ -104,7 +104,12 @@ class Chart extends React.Component {
         type: "datetime",
         show: true,
         labels: {
-          format: 'DD/MM/YYYY h:mm:ss'
+          datetimeFormatter: {
+            year: 'yyyy',
+            month: 'MMM \'yy',
+            day: 'dd MMM',
+            hour: 'HH:mm'
+          }
         },
         tickAmount: 'dataPoints',
       },

@@ -80,7 +80,7 @@ class Crypto extends React.Component {
           element.push(value);
         });
         if (data.length !== 0)
-          that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
+          that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true, dataFault: result[0] });
       }
 
     })
@@ -138,7 +138,7 @@ class Crypto extends React.Component {
 
   render() {
     return (
-      !this.state.isLoaded && this.state.data !== [] ? <p className="text-center">Loading...</p> :
+      !this.state.isLoaded ? <p className="text-center">Loading...</p> :
         <Container fluid className="p-0">
           <Row>
             <Col lg="8" md="12" className="d-flex">

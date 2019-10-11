@@ -273,7 +273,7 @@ class Statistics extends React.Component {
                     </h3>
                   </div>
                   <Media body>
-                    <h3 className={"mb-1 text-center "}>{data.CosA}</h3>
+                    <h3 className={"mb-1 text-center "}>{data.CosA / 100}</h3>
                   </Media>
                 </Media>
                 <Media>
@@ -284,7 +284,7 @@ class Statistics extends React.Component {
                     </h3>
                   </div>
                   <Media body>
-                    <h3 className={"mb-1 text-center "}>{data.CosB}</h3>
+                    <h3 className={"mb-1 text-center "}>{data.CosB / 100}</h3>
                   </Media>
                 </Media>
                 <Media>
@@ -295,7 +295,7 @@ class Statistics extends React.Component {
                     </h3>
                   </div>
                   <Media body>
-                    <h3 className={"mb-1 text-center "}>{data.CosC}</h3>
+                    <h3 className={"mb-1 text-center "}>{data.CosC / 100}</h3>
                   </Media>
                 </Media>
               </CardBody>
