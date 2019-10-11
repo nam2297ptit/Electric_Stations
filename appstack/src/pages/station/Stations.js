@@ -180,8 +180,7 @@ class Project extends React.Component {
                                                 onChange={this.handleChange}
                                                 size="sm"
                                                 autoComplete="off"
-                                                pattern=".{6,}"
-                                                required
+
                                             />
                                         </FormGroup>
                                     </Col>

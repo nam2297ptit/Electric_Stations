@@ -53,7 +53,8 @@ class Crypto extends React.Component {
           value.time = moment(value.time).format('DD/MM/YYYY h:mm:ss')
           element.push(value);
         });
-        that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
+        if (data.length !== 0)
+          that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
       }
     })
   }
@@ -65,20 +66,23 @@ class Crypto extends React.Component {
     }
   }
   UNSAFE_componentWillMount() {
-    // const that = this;
-    // api.getData((err, result) => {
-    //   if (err) {
-    //     Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
-    //   } else {
-    //     let element = [];
-    //     let data = [...result];
-    //     data.map((value, index) => {
-    //       value.time = moment(value.time).format('DD/MM/YYYY h:mm:ss')
-    //       element.push(value);
-    //     });
-    //     that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
-    //   }
-    // })
+    const that = this;
+    api.getData((err, result) => {
+      if (err) {
+        Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
+      } else {
+        console.log(result);
+        let element = [];
+        let data = [...result];
+        data.map((value, index) => {
+          value.time = moment(value.time).format('DD/MM/YYYY h:mm:ss')
+          element.push(value);
+        });
+        if (data.length !== 0)
+          that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
+      }
+
+    })
   }
 
   componentDidMount() {
@@ -133,7 +137,7 @@ class Crypto extends React.Component {
 
   render() {
     return (
-      !this.state.isLoaded ? <p className="text-center">Loading...</p> :
+      !this.state.isLoaded && this.state.data !== [] ? <p className="text-center">Loading...</p> :
         <Container fluid className="p-0">
           <Row>
             <Col lg="8" md="12" className="d-flex">

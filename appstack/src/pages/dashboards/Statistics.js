@@ -72,8 +72,15 @@ class Statistics extends React.Component {
     };
   }
 
+  shouldComponentUpdate() {
+    if (this.props.data === []) {
+      return false
+    }
+    return true
+  }
   render() {
     const data = this.props.data;
+
     return (
       <div className="w-100">
         <Row>
@@ -396,29 +403,5 @@ class Statistics extends React.Component {
     );
   }
 }
-{/* <Card className="flex-fill pt-1 pb-1" >
-<CardBody>
-  <Media className="d-inline" xs="4">
-    <Square className="feather-md" fill="#3fd932" />
-    <h6 className="mt-1 ml-2">Normal</h6>
-  </Media>
-  <Media className="d-inline ml-2" xs="4">
-    <Square className="feather-md" fill="#cddb27" />
-    <h6 className="mt-1 ml-2">Hight</h6>
-  </Media>
-  <Media className="d-inline ml-2" xs="4">
-    <Square className="feather-md" fill="#e6eb05" />
-    <h6 className="mt-1 ml-2">Attention</h6>
-  </Media>
-  <Media className="d-inline ml-2" xs="4">
-    <Square className="feather-md" fill="#ff9900" />
-    <h6 className="mt-1 ml-2">Warning</h6>
-  </Media>
-  <Media className="d-inline ml-2" xs="4">
-    <Square className="feather-md" fill="#ff1f00" />
-    <h6 className="mt-1 ml-2">Danger</h6>
-  </Media>
-</CardBody>
-</Card> */}
 
 export default Statistics;

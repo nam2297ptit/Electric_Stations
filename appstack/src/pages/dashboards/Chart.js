@@ -37,7 +37,7 @@ class DateTimePicker extends React.Component {
       <div className="InputFromTo" >
         <UncontrolledDropdown >
           <DropdownToggle caret color="light">
-            Phase: {moment(from).format('L')} - {moment(to).format('L')} {' '}
+            Phase: {moment(from).format('DD/MM/YYYY')} - {moment(to).format('DD/MM/YYYY')} {' '}
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem header>

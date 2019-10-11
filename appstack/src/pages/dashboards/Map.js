@@ -1,17 +1,17 @@
 import React from "react";
-import { Card, CardBody } from "reactstrap";
+import { Card, CardBody, CardHeader, CardTitle, Row } from "reactstrap";
 
 import GoogleMapReact from "google-map-react";
 
-class Map extends React.Component {
-  constructor(props) {
-    super(props);
-    const { data } = this.props;
-    this.state = {
-      data: data,
-      activeTab: '1'
-    };
-  }
+class Maps extends React.Component {
+  static defaultProps = {
+    center: {
+      lat: 21.031616,
+      lng: 105.803496
+    },
+    zoom: 14
+  };
+
   getMapOptions = maps => {
     return {
       fullscreenControl: true,
@@ -23,42 +23,40 @@ class Map extends React.Component {
     };
   };
 
-  renderMarkers(sub_id, lat, lng, map, maps) {
-    new maps.Marker({
-      position: {
-        lat: lat,
-        lng: lng
-      },
-      map,
-      title: sub_id
-    });
+  renderMarkers(map, maps) {
+    new maps.Marker(
+      {
+        position: {
+          lat: 40.712784,
+          lng: -74.005941
+        },
+        map,
+        title: "Hello World!",
+        name: 'Dolores park'
+      }
+    );
+  }
+  onMarkerClick(marker) {
+    window.location = '/post'
   }
   render() {
-    const location = this.props.data.location;
-    const sub_id = this.props.data.sub_id;
-    let lat = parseInt(location.latitude)
-    let lng = parseInt(location.longitude)
     return (
-      <Card>
-        <CardBody>
-          <div style={{ height: 240, width: "100%" }}>
-            <GoogleMapReact
-              options={this.getMapOptions}
-              bootstrapURLKeys={{
-                key: "AIzaSyA-aWrwgr64q4b3TEZwQ0lkHI4lZK-moM4"
-              }}
-              defaultCenter={{
-                lat: lat,
-                lng: lng
-              }}
-              defaultZoom={9}
-              onGoogleApiLoaded={({ map, maps }) => this.renderMarkers(sub_id, lat, lng, map, maps)}
-            />
-          </div>
-        </CardBody>
-      </Card>
+      <Row style={{ width: '100%', height: 250 }} className="mb-2 pl-3">
+        <GoogleMapReact
+          options={this.getMapOptions}
+          bootstrapURLKeys={{
+            key: "AIzaSyA-aWrwgr64q4b3TEZwQ0lkHI4lZK-moM4"
+          }}
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+          onGoogleApiLoaded={({ map, maps }) => this.renderMarkers(map, maps)}
+
+          label={"hello"}
+        />
+      </Row>
+
     );
   }
 }
 
-export default Map;
+export default Maps;
