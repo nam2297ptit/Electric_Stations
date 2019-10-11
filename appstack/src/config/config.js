@@ -1,9 +1,9 @@
 const config_network = {
-    "host": "http://80.211.131.237",
+    "host": "http://27.72.98.217",
     "port": "8001"
 };
 const config_socket = {
-    "ip": "http://80.211.131.237:8001",
+    "ip": "http://27.72.98.217:8001",
 };
 
 const api_path = config_network.host + ':' + config_network.port + "/api/v1/";
