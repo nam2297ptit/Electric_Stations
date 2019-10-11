@@ -444,7 +444,7 @@ class Tables extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: "volt",
+      type: "all",
       isLoaded: false,
       data: []
     };
