@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import {
-  dashboard as dashboardRoutes,
-  landing as landingRoutes,
-  page as pageRoutes,
-  dashboardWithoutSidebar as dashboardWithoutSidebarRoutes
+    dashboard as dashboardRoutes,
+    landing as landingRoutes,
+    page as pageRoutes,
+    dashboardWithoutSidebar as dashboardWithoutSidebarRoutes
 } from "./index";
 
 import DashboardLayout from "../layouts/Dashboard";
@@ -19,35 +19,35 @@ import ScrollToTop from "../components/ScrollToTop";
 
 
 const PrivateRoute = (Layout, routes, isSidebar) =>
-  routes.map(({ children, path, component: Component }, index) =>
-    children ? (
-      // Route item with children
-      children.map(({ path, component: Component }, index) => (
-        <Route
-          key={index}
-          path={path}
-          exact
-          render={props => (
-                <Layout isSidebar={isSidebar}>
-                  <Component {...props} />
-                </Layout>
-          )}
-        />
-      ))
-    ) : (
-      // Route item without children
-      <Route
-        key={index}
-        path={path}
-        exact
-        render={props => (
-                <Layout isSidebar={isSidebar}>
-                    <Component {...props} />
-                </Layout>
-        )}
-      />
-    )
-  );
+    routes.map(({ children, path, component: Component }, index) =>
+        children ? (
+            // Route item with children
+            children.map(({ path, component: Component }, index) => (
+                <Route
+                    key={index}
+                    path={path}
+                    exact
+                    render={props => (
+                        <Layout isSidebar={isSidebar}>
+                            <Component {...props} />
+                        </Layout>
+                    )}
+                />
+            ))
+        ) : (
+                // Route item without children
+                <Route
+                    key={index}
+                    path={path}
+                    exact
+                    render={props => (
+                        <Layout isSidebar={isSidebar}>
+                            <Component {...props} />
+                        </Layout>
+                    )}
+                />
+            )
+    );
 
 const PublicRoute = (Layout, routes) =>
     routes.map(({ children, path, component: Component }, index) =>
@@ -66,46 +66,46 @@ const PublicRoute = (Layout, routes) =>
                 />
             ))
         ) : (
-            // Route item without children
-            <Route
-                key={index}
-                path={path}
-                exact
-                render={props => (
-                    <Layout>
-                        <Component {...props} />
-                    </Layout>
-                )}
-            />
-        )
+                // Route item without children
+                <Route
+                    key={index}
+                    path={path}
+                    exact
+                    render={props => (
+                        <Layout>
+                            <Component {...props} />
+                        </Layout>
+                    )}
+                />
+            )
     );
 
 function Routes() {
-    return(
+    return (
 
         <Router>
             <ScrollToTop>
                 <Switch>
-                    <Route exact path="/" render={() => (<Redirect to="/dashboard"/>)}/>
+                    <Route exact path="/" render={() => (<Redirect to="/stations" />)} />
                     {PublicRoute(LandingLayout, landingRoutes)}
                     <Route
                         path="/logout"
                         render={() => (
-                            <Logout/>
+                            <Logout />
                         )}
                     />
                     {PublicRoute(AuthLayout, pageRoutes)}
                     {
-                        localStorage.getItem('userInfo')!==null ? PrivateRoute(DashboardLayout, dashboardWithoutSidebarRoutes, false) : <Redirect to="/auth/sign-in"/>
+                        localStorage.getItem('userInfo') !== null ? PrivateRoute(DashboardLayout, dashboardWithoutSidebarRoutes, false) : <Redirect to="/auth/sign-in" />
                     }
                     {
-                        localStorage.getItem('project')!==null ? PrivateRoute(DashboardLayout, dashboardRoutes, true) : <Redirect to="/project"/>
+                        localStorage.getItem('project') !== null ? PrivateRoute(DashboardLayout, dashboardRoutes, true) : <Redirect to="/stations" />
                     }
 
                     <Route
                         render={() => (
                             <AuthLayout>
-                                <Page404/>
+                                <Page404 />
                             </AuthLayout>
                         )}
                     />

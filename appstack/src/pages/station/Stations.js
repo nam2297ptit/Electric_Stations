@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import {
     Row, Col, Container,
     Button,
@@ -122,6 +122,8 @@ class Project extends React.Component {
     }
 
     render() {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        const isAdmin = userInfo.is_admin;
         return (
             <React.Fragment >
                 <Modal isOpen={this.state.showModal.create_project} className="modal-project">
@@ -304,80 +306,96 @@ class Project extends React.Component {
                         </Button>
                     </ModalFooter>
                 </Modal>
+                {
+                    this.state.data.length !== 0 ?
+                        <React.Fragment>
+                            <h1 className="text-center m-5">Stations</h1>
+                            <Container className="mt-2">
+                                <Row>
+                                    <Col xs="3">
+                                        <Input className="width-percent-40 ml-3" id="inputSearch" autoComplete="off" placeholder="Search Station" onKeyUp={this.handleSearch.bind(this)} />
+                                    </Col>
+                                    <Col xs="2"></Col>
+                                    <Col xs="2" className="pr-4">
+                                        <Input type="select" onChange={this.handleChangeType} value={this.state.type}  >
+                                            <option value="list">List</option>
+                                            <option value="map">Map</option>
+                                        </Input>
+                                    </Col>
+                                    <Col xs="3"></Col>
+                                    <Col xs="2" className="pr-4">
+                                        {isAdmin === true ? <Button className="float-right mr-3 " onClick={this.handleShow.bind(this)}><FontAwesomeIcon icon={faPlus} /> New Station</Button> : null}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    {
+                                        this.state.type === "list"
+                                            ?
+                                            <Col>
+                                                {this.state.isLoaderAPI ?
+                                                    this.state.data.map(({ id, manager, machine, photo, i_am_admin, power, sub_id, address, name }, index) => {
+                                                        if (ValidInput.isEmpty(this.state.keyWord)) {
+                                                            return (
+                                                                <TableProject
+                                                                    key={index}
+                                                                    id={id}
+                                                                    index={index + 1}
+                                                                    i_am_admin={i_am_admin}
+                                                                    manager={manager}
+                                                                    machine={machine}
+                                                                    sub_id={sub_id}
+                                                                    photo={photo}
+                                                                    power={power}
+                                                                    address={address}
+                                                                    name={name}
+                                                                />
+                                                            );
+                                                        }
+                                                        else {
+                                                            if (manager.indexOf(this.state.keyWord) !== -1) {
+                                                                return (
+                                                                    <TableProject
+                                                                        key={index}
+                                                                        id={id}
+                                                                        index={index + 1}
+                                                                        i_am_admin={i_am_admin}
+                                                                        manager={manager}
+                                                                        machine={machine}
+                                                                        sub_id={sub_id}
+                                                                        photo={photo}
+                                                                        power={power}
+                                                                        address={address}
+                                                                    />
+                                                                );
+                                                            }
+                                                        }
 
-                <h1 className="text-center m-5">Stations</h1>
-                <Container className="mt-2">
-                    <Row>
-                        <Col xs="3">
-                            <Input className="width-percent-40 ml-3" id="inputSearch" autoComplete="off" placeholder="Search Station" onKeyUp={this.handleSearch.bind(this)} />
-                        </Col>
-                        <Col xs="2"></Col>
-                        <Col xs="2" className="pr-4">
-                            <Input type="select" onChange={this.handleChangeType} value={this.state.type}  >
-                                <option value="list">List</option>
-                                <option value="map">Map</option>
-                            </Input>
-                        </Col>
-                        <Col xs="3"></Col>
-                        <Col xs="2" className="pr-4">
-                            <Button className="float-right mr-3 " onClick={this.handleShow.bind(this)}><FontAwesomeIcon icon={faPlus} /> New Station</Button>
-                        </Col>
-                    </Row>
-                    <Row>
-                        {
-                            this.state.type === "list"
-                                ?
-                                <Col>
-                                    {this.state.isLoaderAPI ?
-                                        this.state.data.map(({ id, manager, machine, photo, i_am_admin, power, sub_id, address, name }, index) => {
-                                            if (ValidInput.isEmpty(this.state.keyWord)) {
-                                                return (
-                                                    <TableProject
-                                                        key={index}
-                                                        id={id}
-                                                        index={index + 1}
-                                                        i_am_admin={i_am_admin}
-                                                        manager={manager}
-                                                        machine={machine}
-                                                        sub_id={sub_id}
-                                                        photo={photo}
-                                                        power={power}
-                                                        address={address}
-                                                        name={name}
-                                                    />
-                                                );
-                                            }
-                                            else {
-                                                if (manager.indexOf(this.state.keyWord) !== -1) {
-                                                    return (
-                                                        <TableProject
-                                                            key={index}
-                                                            id={id}
-                                                            index={index + 1}
-                                                            i_am_admin={i_am_admin}
-                                                            manager={manager}
-                                                            machine={machine}
-                                                            sub_id={sub_id}
-                                                            photo={photo}
-                                                            power={power}
-                                                            address={address}
-                                                        />
-                                                    );
+                                                    })
+                                                    : <h1 className="text-center">Loading....</h1>
                                                 }
-                                            }
-
-                                        })
-                                        : <h1 className="text-center">Loading....</h1>
+                                            </Col>
+                                            :
+                                            <Col>
+                                                <Maps data={this.state.data} />
+                                            </Col>
                                     }
-                                </Col>
-                                :
-                                <Col>
-                                    <Maps data={this.state.data} />
-                                </Col>
-                        }
 
-                    </Row>
-                </Container>
+                                </Row>
+                            </Container>
+                        </React.Fragment>
+                        :
+                        <div className="text-center mt-5">
+                            <h1 className="display-1 font-weight-bold">404</h1>
+                            <p className="h1">Stations not found.</p>
+                            <p className="h2 font-weight-normal mt-3 mb-4">Please contact the administrator for information</p>
+                            <Link to="/logout">
+                                <Button color="primary" size="lg">
+                                    Return to login
+                          </Button>
+                            </Link>
+                        </div>
+                }
+
             </React.Fragment>
         )
     }
