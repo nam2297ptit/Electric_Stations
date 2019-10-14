@@ -122,8 +122,6 @@ class Project extends React.Component {
     }
 
     render() {
-        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-        const isAdmin = userInfo.is_admin;
         return (
             <React.Fragment >
                 <Modal isOpen={this.state.showModal.create_project} className="modal-project">
@@ -324,7 +322,7 @@ class Project extends React.Component {
                                     </Col>
                                     <Col xs="3"></Col>
                                     <Col xs="2" className="pr-4">
-                                        {isAdmin === true ? <Button className="float-right mr-3 " onClick={this.handleShow.bind(this)}><FontAwesomeIcon icon={faPlus} /> New Station</Button> : null}
+                                        <Button className="float-right mr-3 " onClick={this.handleShow.bind(this)}><FontAwesomeIcon icon={faPlus} /> New Station</Button>
                                     </Col>
                                 </Row>
                                 <Row>
