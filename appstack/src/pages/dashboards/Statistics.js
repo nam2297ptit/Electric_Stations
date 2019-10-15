@@ -80,7 +80,6 @@ class Statistics extends React.Component {
   }
   render() {
     const data = this.props.data;
-
     return (
       <div className="w-100">
         <Row>

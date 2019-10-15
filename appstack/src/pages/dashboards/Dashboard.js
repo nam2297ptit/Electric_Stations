@@ -53,8 +53,12 @@ class Crypto extends React.Component {
           value.time = moment(value.time).format('DD/MM/YYYY h:mm:ss')
           element.push(value);
         });
-        if (data.length !== 0)
+        if (data.length !== 0) {
           that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
+        }
+        else {
+          that.setState({ data_tables: element, data_charts: result, isLoaderAPI: true });
+        }
       }
     })
   }
@@ -71,7 +75,6 @@ class Crypto extends React.Component {
       if (err) {
         Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
       } else {
-        console.log(result);
         let element = [];
         let data = [...result];
         data.map((values, index) => {
@@ -137,6 +140,8 @@ class Crypto extends React.Component {
   }
 
   render() {
+    console.log(this.state.data_tables);
+
     return (
       !this.state.isLoaded ? <p className="text-center">Loading...</p> :
         <Container fluid className="p-0">

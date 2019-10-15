@@ -35,8 +35,6 @@ class StationInformation extends React.Component {
   render() {
     const { data } = this.state;
     const { dataFault } = this.props;
-    console.log(dataFault);
-
     return (
       <React.Fragment>
         <Tabs defaultActiveKey="info"  >
