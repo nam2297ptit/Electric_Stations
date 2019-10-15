@@ -79,7 +79,7 @@ class StationInformation extends React.Component {
                 <Row>
                   <Col>
                     <Square className="feather-md" fill={dataFault.Fault.slice(0, 1) === "1" ? "red" : "#3fd932"} />
-                    {" Metel"}
+                    {" Meter"}
                   </Col>
                   <Col>
                     <Square className="feather-md" fill={dataFault.Fault.slice(1, 2) === "1" ? "red" : "#3fd932"} />
