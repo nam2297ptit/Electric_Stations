@@ -12,6 +12,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import TableProject from "./StationsTable"
 import Notification from "../../components/Notification";
 import Maps from "./Maps";
+import { LoadingSprinner } from "../../components/CustomTag";
 const api = require("./api/api");
 const ValidInput = require("../../utils/ValidInput");
 
@@ -123,234 +124,217 @@ class Project extends React.Component {
 
     render() {
         return (
-            <React.Fragment >
-                <Modal isOpen={this.state.showModal.create_project} className="modal-project">
-                    <ModalHeader className="modal-project__header">New station</ModalHeader>
-                    <ModalBody >
-                        <FormGroup>
-                            <Label for="name_of_station">Station name</Label>
-                            <Input
-                                type="text" name="name"
-                                placeholder="Name of station"
-                                value={this.state.temp.name}
-                                onChange={this.handleChange}
-                                size="sm"
-                                autoComplete="off"
-                            />
-                        </FormGroup>
-                        <Row>
-                            <Col>
-                                <FormGroup>
-                                    <Label for="name_of_manager">Manager</Label>
-                                    <Input
-                                        type="text" name="manager"
-                                        placeholder="Name of manager"
-                                        value={this.state.temp.manager}
-                                        onChange={this.handleChange}
-                                        size="sm"
-                                        autoComplete="off"
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Col>
-                                <FormGroup>
-                                    <Label for="name_of_phone">Phone Number</Label>
-                                    <Input
-                                        type="text" name="phone_number"
-                                        placeholder="Phone number"
-                                        value={this.state.temp.phone_number}
-                                        onChange={this.handleChange}
-                                        size="sm"
-                                        autoComplete="off"
-                                    />
-                                </FormGroup>
-                            </Col>
-                        </Row>
+            this.state.isLoaderAPI === true ?
+                <React.Fragment >
+                    <Modal isOpen={this.state.showModal.create_project} className="modal-project">
+                        <ModalHeader className="modal-project__header">New station</ModalHeader>
+                        <ModalBody >
+                            <FormGroup>
+                                <Label for="name_of_station">Station name</Label>
+                                <Input
+                                    type="text" name="name"
+                                    placeholder="Name of station"
+                                    value={this.state.temp.name}
+                                    onChange={this.handleChange}
+                                    size="sm"
+                                    autoComplete="off"
+                                />
+                            </FormGroup>
+                            <Row>
+                                <Col>
+                                    <FormGroup>
+                                        <Label for="name_of_manager">Manager</Label>
+                                        <Input
+                                            type="text" name="manager"
+                                            placeholder="Name of manager"
+                                            value={this.state.temp.manager}
+                                            onChange={this.handleChange}
+                                            size="sm"
+                                            autoComplete="off"
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Col>
+                                    <FormGroup>
+                                        <Label for="name_of_phone">Phone Number</Label>
+                                        <Input
+                                            type="text" name="phone_number"
+                                            placeholder="Phone number"
+                                            value={this.state.temp.phone_number}
+                                            onChange={this.handleChange}
+                                            size="sm"
+                                            autoComplete="off"
+                                        />
+                                    </FormGroup>
+                                </Col>
+                            </Row>
 
-                        <Row>
-                            <Col>
-                                <Row>
-                                    <Col>
-                                        <FormGroup>
-                                            <Label for="name_of_id">ID</Label>
-                                            <Input
-                                                type="text" name="sub_id"
-                                                placeholder="ID station"
-                                                value={this.state.temp.sub_id}
-                                                onChange={this.handleChange}
-                                                size="sm"
-                                                autoComplete="off"
+                            <Row>
+                                <Col>
+                                    <Row>
+                                        <Col>
+                                            <FormGroup>
+                                                <Label for="name_of_id">ID</Label>
+                                                <Input
+                                                    type="text" name="sub_id"
+                                                    placeholder="ID station"
+                                                    value={this.state.temp.sub_id}
+                                                    onChange={this.handleChange}
+                                                    size="sm"
+                                                    autoComplete="off"
 
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col>
-                                        <FormGroup>
-                                            <Label for="name_of_ki">KI</Label>
-                                            <Input
-                                                type="text" name="KI"
-                                                placeholder="KI"
-                                                value={this.state.temp.KI}
-                                                onChange={this.handleChange}
-                                                size="sm"
-                                                autoComplete="off"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col>
+                                            <FormGroup>
+                                                <Label for="name_of_ki">KI</Label>
+                                                <Input
+                                                    type="text" name="KI"
+                                                    placeholder="KI"
+                                                    value={this.state.temp.KI}
+                                                    onChange={this.handleChange}
+                                                    size="sm"
+                                                    autoComplete="off"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
 
-                            </Col>
-                            <Col>
-                                <Row>
-                                    <Col>
-                                        <FormGroup xs="6">
-                                            <Label for="name_of_volt_high">Volt High</Label>
-                                            <Input
-                                                type="text" name="volt_high"
-                                                placeholder="V"
-                                                value={this.state.temp.volt_high}
-                                                onChange={this.handleChange}
-                                                size="sm"
-                                                autoComplete="off"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col>
-                                        <FormGroup>
-                                            <Label for="name_of_volt_low">Volt Low</Label>
-                                            <Input
-                                                type="text" name="volt_low"
-                                                placeholder="V"
-                                                value={this.state.temp.volt_low}
-                                                onChange={this.handleChange}
-                                                size="sm"
-                                                autoComplete="off"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Row>
-                                    <Col>
-                                        <FormGroup xs="6">
-                                            <Label for="name_of_temp_high">Temp High</Label>
-                                            <Input
-                                                type="text" name="temp_high"
-                                                placeholder="°C"
-                                                value={this.state.temp.temp_high}
-                                                onChange={this.handleChange}
-                                                size="sm"
-                                                autoComplete="off"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col>
-                                        <FormGroup>
-                                            <Label for="name_of_oil_temp_high">Oil Temp High</Label>
-                                            <Input
-                                                type="text" name="oil_temp_high"
-                                                placeholder="°C"
-                                                value={this.state.temp.oil_temp_high}
-                                                onChange={this.handleChange}
-                                                size="sm"
-                                                autoComplete="off"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
-                            </Col>
-                            <Col>
-                                <Row>
-                                    <Col>
-                                        <FormGroup xs="6">
-                                            <Label for="name_of_volt_high">Current High</Label>
-                                            <Input
-                                                type="text" name="current_high"
-                                                placeholder="A"
-                                                value={this.state.temp.current_high}
-                                                onChange={this.handleChange}
-                                                size="sm"
-                                                autoComplete="off"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col>
-                                        <FormGroup>
-                                            <Label for="name_of_volt_low">Time Update</Label>
-                                            <Input
-                                                type="text" name="time_update"
-                                                placeholder="minute"
-                                                value={this.state.temp.time_update}
-                                                onChange={this.handleChange}
-                                                size="sm"
-                                                autoComplete="off"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
+                                </Col>
+                                <Col>
+                                    <Row>
+                                        <Col>
+                                            <FormGroup xs="6">
+                                                <Label for="name_of_volt_high">Volt High</Label>
+                                                <Input
+                                                    type="text" name="volt_high"
+                                                    placeholder="V"
+                                                    value={this.state.temp.volt_high}
+                                                    onChange={this.handleChange}
+                                                    size="sm"
+                                                    autoComplete="off"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col>
+                                            <FormGroup>
+                                                <Label for="name_of_volt_low">Volt Low</Label>
+                                                <Input
+                                                    type="text" name="volt_low"
+                                                    placeholder="V"
+                                                    value={this.state.temp.volt_low}
+                                                    onChange={this.handleChange}
+                                                    size="sm"
+                                                    autoComplete="off"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Row>
+                                        <Col>
+                                            <FormGroup xs="6">
+                                                <Label for="name_of_temp_high">Temp High</Label>
+                                                <Input
+                                                    type="text" name="temp_high"
+                                                    placeholder="°C"
+                                                    value={this.state.temp.temp_high}
+                                                    onChange={this.handleChange}
+                                                    size="sm"
+                                                    autoComplete="off"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col>
+                                            <FormGroup>
+                                                <Label for="name_of_oil_temp_high">Oil Temp High</Label>
+                                                <Input
+                                                    type="text" name="oil_temp_high"
+                                                    placeholder="°C"
+                                                    value={this.state.temp.oil_temp_high}
+                                                    onChange={this.handleChange}
+                                                    size="sm"
+                                                    autoComplete="off"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col>
+                                    <Row>
+                                        <Col>
+                                            <FormGroup xs="6">
+                                                <Label for="name_of_volt_high">Current High</Label>
+                                                <Input
+                                                    type="text" name="current_high"
+                                                    placeholder="A"
+                                                    value={this.state.temp.current_high}
+                                                    onChange={this.handleChange}
+                                                    size="sm"
+                                                    autoComplete="off"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col>
+                                            <FormGroup>
+                                                <Label for="name_of_volt_low">Time Update</Label>
+                                                <Input
+                                                    type="text" name="time_update"
+                                                    placeholder="minute"
+                                                    value={this.state.temp.time_update}
+                                                    onChange={this.handleChange}
+                                                    size="sm"
+                                                    autoComplete="off"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
 
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="secondary" onClick={this.handleClose.bind(this)}>
-                            Cancel
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="secondary" onClick={this.handleClose.bind(this)}>
+                                Cancel
                         </Button>
-                        <Button color="success" onClick={this.handleCreateProject.bind(this)}>
-                            Create
+                            <Button color="success" onClick={this.handleCreateProject.bind(this)}>
+                                Create
                         </Button>
-                    </ModalFooter>
-                </Modal>
-                {
-                    this.state.data.length !== 0 ?
-                        <React.Fragment>
-                            <h1 className="text-center m-5">Stations</h1>
-                            <Container className="mt-2">
-                                <Row>
-                                    <Col xs="3">
-                                        <Input className="width-percent-40 ml-3" id="inputSearch" autoComplete="off" placeholder="Search Station" onKeyUp={this.handleSearch.bind(this)} />
-                                    </Col>
-                                    <Col xs="2"></Col>
-                                    <Col xs="2" className="pr-4">
-                                        <Input type="select" onChange={this.handleChangeType} value={this.state.type}  >
-                                            <option value="list">List</option>
-                                            <option value="map">Map</option>
-                                        </Input>
-                                    </Col>
-                                    <Col xs="3"></Col>
-                                    <Col xs="2" className="pr-4">
-                                        <Button className="float-right mr-3 " onClick={this.handleShow.bind(this)}><FontAwesomeIcon icon={faPlus} /> New Station</Button>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    {
-                                        this.state.type === "list"
-                                            ?
-                                            <Col>
-                                                {this.state.isLoaderAPI ?
-                                                    this.state.data.map(({ id, manager, machine, photo, i_am_admin, power, sub_id, address, name }, index) => {
-                                                        if (ValidInput.isEmpty(this.state.keyWord)) {
-                                                            return (
-                                                                <TableProject
-                                                                    key={index}
-                                                                    id={id}
-                                                                    index={index + 1}
-                                                                    i_am_admin={i_am_admin}
-                                                                    manager={manager}
-                                                                    machine={machine}
-                                                                    sub_id={sub_id}
-                                                                    photo={photo}
-                                                                    power={power}
-                                                                    address={address}
-                                                                    name={name}
-                                                                />
-                                                            );
-                                                        }
-                                                        else {
-                                                            if (manager.indexOf(this.state.keyWord) !== -1) {
+                        </ModalFooter>
+                    </Modal>
+                    {
+                        this.state.data.length !== 0 ?
+                            <React.Fragment>
+                                <h1 className="text-center m-5">Stations</h1>
+                                <Container className="mt-2">
+                                    <Row>
+                                        <Col xs="3">
+                                            <Input className="width-percent-40 ml-3" id="inputSearch" autoComplete="off" placeholder="Search Station" onKeyUp={this.handleSearch.bind(this)} />
+                                        </Col>
+                                        <Col xs="2"></Col>
+                                        <Col xs="2" className="pr-4">
+                                            <Input type="select" onChange={this.handleChangeType} value={this.state.type}  >
+                                                <option value="list">List</option>
+                                                <option value="map">Map</option>
+                                            </Input>
+                                        </Col>
+                                        <Col xs="3"></Col>
+                                        <Col xs="2" className="pr-4">
+                                            <Button className="float-right mr-3 " onClick={this.handleShow.bind(this)}><FontAwesomeIcon icon={faPlus} /> New Station</Button>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        {
+                                            this.state.type === "list"
+                                                ?
+                                                <Col>
+                                                    {this.state.isLoaderAPI ?
+                                                        this.state.data.map(({ id, manager, machine, photo, i_am_admin, power, sub_id, address, name }, index) => {
+                                                            if (ValidInput.isEmpty(this.state.keyWord)) {
                                                                 return (
                                                                     <TableProject
                                                                         key={index}
@@ -363,38 +347,58 @@ class Project extends React.Component {
                                                                         photo={photo}
                                                                         power={power}
                                                                         address={address}
+                                                                        name={name}
                                                                     />
                                                                 );
                                                             }
-                                                        }
+                                                            else {
+                                                                if (manager.indexOf(this.state.keyWord) !== -1) {
+                                                                    return (
+                                                                        <TableProject
+                                                                            key={index}
+                                                                            id={id}
+                                                                            index={index + 1}
+                                                                            i_am_admin={i_am_admin}
+                                                                            manager={manager}
+                                                                            machine={machine}
+                                                                            sub_id={sub_id}
+                                                                            photo={photo}
+                                                                            power={power}
+                                                                            address={address}
+                                                                        />
+                                                                    );
+                                                                }
+                                                            }
 
-                                                    })
-                                                    : <h1 className="text-center">Loading....</h1>
-                                                }
-                                            </Col>
-                                            :
-                                            <Col>
-                                                <Maps data={this.state.data} />
-                                            </Col>
-                                    }
+                                                        })
+                                                        : <h1 className="text-center">Loading....</h1>
+                                                    }
+                                                </Col>
+                                                :
+                                                <Col>
+                                                    <Maps data={this.state.data} />
+                                                </Col>
+                                        }
 
-                                </Row>
-                            </Container>
-                        </React.Fragment>
-                        :
-                        <div className="text-center mt-5">
-                            <h1 className="display-1 font-weight-bold">404</h1>
-                            <p className="h1">Stations not found.</p>
-                            <p className="h2 font-weight-normal mt-3 mb-4">Please contact the administrator for information</p>
-                            <Link to="/logout">
-                                <Button color="primary" size="lg">
-                                    Return to login
+                                    </Row>
+                                </Container>
+                            </React.Fragment>
+                            :
+                            <div className="text-center mt-5">
+                                <h1 className="display-1 font-weight-bold">404</h1>
+                                <p className="h1">Stations not found.</p>
+                                <p className="h2 font-weight-normal mt-3 mb-4">Please contact the administrator for information</p>
+                                <Link to="/logout">
+                                    <Button color="primary" size="lg">
+                                        Return to login
                           </Button>
-                            </Link>
-                        </div>
-                }
+                                </Link>
+                            </div>
+                    }
 
-            </React.Fragment>
+                </React.Fragment>
+                :
+                <LoadingSprinner />
         )
     }
 };

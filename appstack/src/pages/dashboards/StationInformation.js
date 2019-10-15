@@ -59,19 +59,19 @@ class StationInformation extends React.Component {
                     <h4><Paperclip width={18} height={18} className="mr-1" /> ID:{" "}<Link to="#">{data.sub_id}</Link></h4>
                   </li>
                   <li className="mb-2">
-                    <h4><Home width={18} height={18} className="mr-1" /> Loại máy:{" "}<Link to="#">{data.machine}</Link></h4>
+                    <h4><Home width={18} height={18} className="mr-1" /> Type of machine:{" "}<Link to="#">{data.machine}</Link></h4>
                   </li>
                   <li className="mb-2">
-                    <h4><Briefcase width={18} height={18} className="mr-1" /> Công suất định mức:{" "}<Link to="#">{data.power}</Link></h4>
+                    <h4><Briefcase width={18} height={18} className="mr-1" /> Rated power:{" "}<Link to="#">{data.power}</Link></h4>
                   </li>
                   <li className="mb-2">
-                    <h4><MapPin width={18} height={18} className="mr-1" /> Địa chỉ:{" "}<Link to="#">{data.address}</Link></h4>
+                    <h4><MapPin width={18} height={18} className="mr-1" /> Address:{" "}<Link to="#">{data.address}</Link></h4>
                   </li>
                   <li className="mb-2">
-                    <h4><User width={18} height={18} className="mr-1" /> Người quản lí:{" "}<Link to="#">{data.manager}</Link></h4>
+                    <h4><User width={18} height={18} className="mr-1" /> Manager:{" "}<Link to="#">{data.manager}</Link></h4>
                   </li>
                   <li className="mb-2">
-                    <h4><Phone width={18} height={18} className="mr-1" /> Số điện thoại:{" "}<Link to="#">{data.phone_number}</Link></h4>
+                    <h4><Phone width={18} height={18} className="mr-1" /> Phone number:{" "}<Link to="#">{data.phone_number}</Link></h4>
                   </li>
                 </ul>
               </CardBody>
@@ -81,7 +81,7 @@ class StationInformation extends React.Component {
                 <Row>
                   <Col>
                     <Square className="feather-md" fill={dataFault.Fault.slice(0, 1) === "1" ? "red" : "#3fd932"} />
-                    {" Mortor"}
+                    {" Metel"}
                   </Col>
                   <Col>
                     <Square className="feather-md" fill={dataFault.Fault.slice(1, 2) === "1" ? "red" : "#3fd932"} />
