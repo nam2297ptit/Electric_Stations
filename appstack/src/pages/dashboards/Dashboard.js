@@ -45,20 +45,15 @@ class Crypto extends React.Component {
       if (err) {
         Notification("error", "Error", err.data === undefined ? err : err.data._error_message)
       } else {
-        console.log(result);
-
+        console.log(result)
         let element = [];
         let data = [...result];
-        data.map((value, index) => {
-          value.time = moment(value.time).format('DD/MM/YYYY h:mm:ss')
+        data.map((values, index) => {
+          let value = { ...values }
+          value.time = moment(value.time).format('DD/MM/YYYY h:mm:ss a')
           element.push(value);
         });
-        if (data.length !== 0) {
-          that.setState({ data_tables: element, data: result[0], data_charts: result, isLoaderAPI: true });
-        }
-        else {
-          that.setState({ data_tables: element, data_charts: result, isLoaderAPI: true });
-        }
+        that.setState({ data_tables: element, data_charts: result, isLoaderAPI: true });
       }
     })
   }
